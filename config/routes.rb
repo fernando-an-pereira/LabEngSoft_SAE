@@ -1,4 +1,6 @@
 SAE::Application.routes.draw do
+  devise_for :pessoas
+
   get "home/index"
 
   # The priority is based upon order of creation:
