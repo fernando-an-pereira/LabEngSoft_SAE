@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Data:</b>
+  <%= @registro_de_emergencium.data %>
+</p>
+
+<p>
+  <b>Localidadeemergencia:</b>
+  <%= @registro_de_emergencium.localidadeEmergencia %>
+</p>
+
+<p>
+  <b>Gravidade:</b>
+  <%= @registro_de_emergencium.gravidade %>
+</p>
+
+<p>
+  <b>Causas:</b>
+  <%= @registro_de_emergencium.causas %>
+</p>
+
+
+<%= link_to 'Edit', edit_registro_de_emergencium_path(@registro_de_emergencium) %> |
+<%= link_to 'Back', registro_de_emergencia_path %>
