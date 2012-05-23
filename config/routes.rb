@@ -1,5 +1,7 @@
 SAE::Application.routes.draw do
 
+  devise_for :pacientes
+
   devise_for :atendentes
 
   devise_for :medicos
