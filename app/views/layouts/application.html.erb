@@ -9,11 +9,11 @@
 <body style="background: #EEEEEE;">
 
 <div id="user_nav">
-	<% if pessoa_signed_in? %>
-		Logado como <%= current_pessoa.email %>.
-		<%= link_to "Sair", destroy_pessoa_session_path, :method => :delete %> 
+	<% if atendente_signed_in? %>
+		Logado como <%= current_atendente.email %>.
+		<%= link_to "Sair", destroy_atendente_session_path, :method => :delete %> 
 	<% else %>
-		<%= link_to "Cadastrar-se", new_pessoa_registration_path %> ou <%= link_to "Entrar", new_pessoa_session_path %>
+		<%= link_to "Cadastrar-se", new_atendente_registration_path %> ou <%= link_to "Entrar", new_atendente_session_path %>
 	<% end %>
 </div>
 
