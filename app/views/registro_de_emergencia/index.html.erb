@@ -1,0 +1,29 @@
+<h1>Listing registro_de_emergencia</h1>
+
+<table>
+  <tr>
+    <th>Data</th>
+    <th>Localidadeemergencia</th>
+    <th>Gravidade</th>
+    <th>Causas</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @registro_de_emergencia.each do |registro_de_emergencium| %>
+  <tr>
+    <td><%= registro_de_emergencium.data %></td>
+    <td><%= registro_de_emergencium.localidadeEmergencia %></td>
+    <td><%= registro_de_emergencium.gravidade %></td>
+    <td><%= registro_de_emergencium.causas %></td>
+    <td><%= link_to 'Show', registro_de_emergencium %></td>
+    <td><%= link_to 'Edit', edit_registro_de_emergencium_path(registro_de_emergencium) %></td>
+    <td><%= link_to 'Destroy', registro_de_emergencium, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Registro de emergencium', new_registro_de_emergencium_path %>

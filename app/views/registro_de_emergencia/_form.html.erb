@@ -1,0 +1,33 @@
+<%= form_for(@registro_de_emergencium) do |f| %>
+  <% if @registro_de_emergencium.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@registro_de_emergencium.errors.count, "error") %> prohibited this registro_de_emergencium from being saved:</h2>
+
+      <ul>
+      <% @registro_de_emergencium.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :data %><br />
+    <%= f.datetime_select :data %>
+  </div>
+  <div class="field">
+    <%= f.label :localidadeEmergencia %><br />
+    <%= f.text_area :localidadeEmergencia %>
+  </div>
+  <div class="field">
+    <%= f.label :gravidade %><br />
+    <%= f.text_area :gravidade %>
+  </div>
+  <div class="field">
+    <%= f.label :causas %><br />
+    <%= f.text_area :causas %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
