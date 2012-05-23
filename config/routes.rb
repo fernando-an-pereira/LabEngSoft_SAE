@@ -1,5 +1,8 @@
 SAE::Application.routes.draw do
-  devise_for :pessoas
+
+  devise_for :atendentes
+
+  devise_for :medicos
 
   get "home/index"
 
