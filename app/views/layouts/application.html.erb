@@ -8,13 +8,28 @@
 </head>
 <body style="background: #EEEEEE;">
 
-<div id="user_nav">
-	<% if atendente_signed_in? %>
-		Logado como <%= current_atendente.email %>.
-		<%= link_to "Sair", destroy_atendente_session_path, :method => :delete %> 
-	<% else %>
-		<%= link_to "Cadastrar-se", new_atendente_registration_path %> ou <%= link_to "Entrar", new_atendente_session_path %>
-	<% end %>
+<div id="atendente_nav">
+      <%- flash.each do |name, msg| -%>
+        <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
+      <%- end -%>
+
+      <p><%= link_to 'Home', root_path %></p>
+
+      <% if atendente_signed_in? -%>
+        <div id="atendente_login_box" style="float:right">
+          <%= current_atendente.email %> |
+          <%= link_to 'My info', edit_atendente_registration_path %> |
+          <%= link_to 'Sign out', destroy_atendente_session_path, :method => :delete %>
+        </div>
+      <% end -%>
+      <% if medico_signed_in? -%>
+        <div id="medico_login_box" style="float:left">
+          <%= current_medico.email %> |
+          <%= link_to 'medico section', medicos_path %> |
+          <%= link_to 'Sign out', destroy_medico_session_path, :method => :delete %>
+        </div>
+      <% end -%>
+      <div style="clear:both"></div>
 </div>
 
 <%= yield %>

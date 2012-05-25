@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  RENAVAM: MyString
+  latitude: MyString
+  longitude: MyString
+  ocupado: false
+
+two:
+  RENAVAM: MyString
+  latitude: MyString
+  longitude: MyString
+  ocupado: false
