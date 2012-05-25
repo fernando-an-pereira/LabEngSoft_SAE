@@ -1,0 +1,34 @@
+<h1>Pesquisa de pacientes/h1>
+
+<div class="field">
+  <% @condition.label :nome %></br>
+  <% @condition.text_field :nome %></br>
+  <%= button_to "Buscar", :action => :sample %>
+</div>
+
+if @pacientes.nil?
+  render :text => 'Nenhum paciente encontrado.'
+else
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th></th>
+      <th></th>
+    </tr>
+
+  <% @pacientes.each do |paciente| %>
+    <tr>
+      <td><%= paciente.id %></td>
+      <td><%= paciente.nome%></td>
+      <td><%= link_to 'Mostrar', paciente %></td>
+      <td><%= link_to 'Selecionar', edit_paciente_path(paciente) %></td>
+    </tr>
+    end
+  <% end %>
+end
+
+  </table>
+<br />
+
+<%= link_to 'Cadastrar Paciente', new_paciente_path %>
