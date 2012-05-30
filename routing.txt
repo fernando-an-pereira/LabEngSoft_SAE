@@ -1,0 +1,62 @@
+       registro_de_emergencia GET    /registro_de_emergencia(.:format)                    registro_de_emergencia#index
+                              POST   /registro_de_emergencia(.:format)                    registro_de_emergencia#create
+  new_registro_de_emergencium GET    /registro_de_emergencia/new(.:format)                registro_de_emergencia#new
+ edit_registro_de_emergencium GET    /registro_de_emergencia/:id/edit(.:format)           registro_de_emergencia#edit
+      registro_de_emergencium GET    /registro_de_emergencia/:id(.:format)                registro_de_emergencia#show
+                              PUT    /registro_de_emergencia/:id(.:format)                registro_de_emergencia#update
+                              DELETE /registro_de_emergencia/:id(.:format)                registro_de_emergencia#destroy
+         new_paciente_session GET    /pacientes/sign_in(.:format)                         devise/sessions#new
+             paciente_session POST   /pacientes/sign_in(.:format)                         devise/sessions#create
+     destroy_paciente_session DELETE /pacientes/sign_out(.:format)                        devise/sessions#destroy
+            paciente_password POST   /pacientes/password(.:format)                        devise/passwords#create
+        new_paciente_password GET    /pacientes/password/new(.:format)                    devise/passwords#new
+       edit_paciente_password GET    /pacientes/password/edit(.:format)                   devise/passwords#edit
+                              PUT    /pacientes/password(.:format)                        devise/passwords#update
+ cancel_paciente_registration GET    /pacientes/cancel(.:format)                          devise/registrations#cancel
+        paciente_registration POST   /pacientes(.:format)                                 devise/registrations#create
+    new_paciente_registration GET    /pacientes/sign_up(.:format)                         devise/registrations#new
+   edit_paciente_registration GET    /pacientes/edit(.:format)                            devise/registrations#edit
+                              PUT    /pacientes(.:format)                                 devise/registrations#update
+                              DELETE /pacientes(.:format)                                 devise/registrations#destroy
+        new_atendente_session GET    /atendentes/sign_in(.:format)                        devise/sessions#new
+            atendente_session POST   /atendentes/sign_in(.:format)                        devise/sessions#create
+    destroy_atendente_session DELETE /atendentes/sign_out(.:format)                       devise/sessions#destroy
+           atendente_password POST   /atendentes/password(.:format)                       devise/passwords#create
+       new_atendente_password GET    /atendentes/password/new(.:format)                   devise/passwords#new
+      edit_atendente_password GET    /atendentes/password/edit(.:format)                  devise/passwords#edit
+                              PUT    /atendentes/password(.:format)                       devise/passwords#update
+cancel_atendente_registration GET    /atendentes/cancel(.:format)                         devise/registrations#cancel
+       atendente_registration POST   /atendentes(.:format)                                devise/registrations#create
+   new_atendente_registration GET    /atendentes/sign_up(.:format)                        devise/registrations#new
+  edit_atendente_registration GET    /atendentes/edit(.:format)                           devise/registrations#edit
+                              PUT    /atendentes(.:format)                                devise/registrations#update
+                              DELETE /atendentes(.:format)                                devise/registrations#destroy
+           new_medico_session GET    /medicos/sign_in(.:format)                           devise/sessions#new
+               medico_session POST   /medicos/sign_in(.:format)                           devise/sessions#create
+       destroy_medico_session DELETE /medicos/sign_out(.:format)                          devise/sessions#destroy
+              medico_password POST   /medicos/password(.:format)                          devise/passwords#create
+          new_medico_password GET    /medicos/password/new(.:format)                      devise/passwords#new
+         edit_medico_password GET    /medicos/password/edit(.:format)                     devise/passwords#edit
+                              PUT    /medicos/password(.:format)                          devise/passwords#update
+   cancel_medico_registration GET    /medicos/cancel(.:format)                            devise/registrations#cancel
+          medico_registration POST   /medicos(.:format)                                   devise/registrations#create
+      new_medico_registration GET    /medicos/sign_up(.:format)                           devise/registrations#new
+     edit_medico_registration GET    /medicos/edit(.:format)                              devise/registrations#edit
+                              PUT    /medicos(.:format)                                   devise/registrations#update
+                              DELETE /medicos(.:format)                                   devise/registrations#destroy
+           pesquisa_pacientes GET    /pesquisas/:pesquisa_id/pacientes(.:format)          pacientes#index
+                              POST   /pesquisas/:pesquisa_id/pacientes(.:format)          pacientes#create
+        new_pesquisa_paciente GET    /pesquisas/:pesquisa_id/pacientes/new(.:format)      pacientes#new
+       edit_pesquisa_paciente GET    /pesquisas/:pesquisa_id/pacientes/:id/edit(.:format) pacientes#edit
+            pesquisa_paciente GET    /pesquisas/:pesquisa_id/pacientes/:id(.:format)      pacientes#show
+                              PUT    /pesquisas/:pesquisa_id/pacientes/:id(.:format)      pacientes#update
+                              DELETE /pesquisas/:pesquisa_id/pacientes/:id(.:format)      pacientes#destroy
+                    pesquisas GET    /pesquisas(.:format)                                 pesquisas#index
+                              POST   /pesquisas(.:format)                                 pesquisas#create
+                 new_pesquisa GET    /pesquisas/new(.:format)                             pesquisas#new
+                edit_pesquisa GET    /pesquisas/:id/edit(.:format)                        pesquisas#edit
+                     pesquisa GET    /pesquisas/:id(.:format)                             pesquisas#show
+                              PUT    /pesquisas/:id(.:format)                             pesquisas#update
+                              DELETE /pesquisas/:id(.:format)                             pesquisas#destroy
+                   home_index GET    /home/index(.:format)                                home#index
+                         root        /                                                    home#index

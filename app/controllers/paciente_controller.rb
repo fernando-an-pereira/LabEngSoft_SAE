@@ -1,22 +1,16 @@
-class PesquisaController < ApplicationController
-  # GET /pesquisa
+class PacienteController < ApplicationController
+  # GET /paciente
   def index
     @pacientes = Paciente.all
-    
-    if @pacientes.nil?
-		@paciente = Paciente.new
-	else
-		@paciente = @pacientes.first
-	end
 
     respond_to do |format|
       format.html # index.html.erb
     end 
   end
   
-  # GET /pesquisa/paciente=:nome
-  def search
-	condition = @paciente.find(params[:nome])
+  # GET /paciente/:id
+  def show
+	condition = Paciente.find(params[:id])
   
 	@rol = Paciente.all
 	@pacientes = nil

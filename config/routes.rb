@@ -1,13 +1,14 @@
 SAE::Application.routes.draw do
 
   resources :registro_de_emergencia
-
+  
   devise_for :pacientes
-
   devise_for :atendentes
-
   devise_for :medicos
 
+  match "pesquisa" => "pesquisa#index"
+  match "pesquisa/pacientes=:nome" => "pesquisa#search"
+  
   get "home/index"
 
   # The priority is based upon order of creation:

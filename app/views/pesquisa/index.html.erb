@@ -1,14 +1,18 @@
-<h1>Pesquisa de pacientes/h1>
+<h1>Pesquisa de pacientes</h1>
 
-<div class="field">
-  <% @condition.label :nome %></br>
-  <% @condition.text_field :nome %></br>
-  <%= button_to "Buscar", :action => :sample %>
-</div>
+<% if @pacientes.first.nil? %>
+	Erro.<br/>
+<% else %>
+	<% render :partial => "paciente/search", :locals => @paciente %>
+<% end %>
 
-if @pacientes.nil?
-  render :text => 'Nenhum paciente encontrado.'
-else
+<% if @pacientes.empty? %>
+	Erro2.<br/>
+<% end %>
+
+<% if @pacientes.empty? %>
+	Nenhum paciente encontrado.
+<% else %>
   <table>
     <tr>
       <th>ID</th>
@@ -22,13 +26,12 @@ else
       <td><%= paciente.id %></td>
       <td><%= paciente.nome%></td>
       <td><%= link_to 'Mostrar', paciente %></td>
-      <td><%= link_to 'Selecionar', edit_paciente_path(paciente) %></td>
+      <td><%= link_to 'Selecionar', edit_pesquisa_path(pesquisa) %></td>
     </tr>
     end
   <% end %>
-end
+<% end %>
 
   </table>
-<br />
-
-<%= link_to 'Cadastrar Paciente', new_paciente_path %>
+<br/>
+</div>
