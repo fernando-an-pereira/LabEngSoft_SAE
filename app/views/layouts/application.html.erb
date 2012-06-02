@@ -6,7 +6,7 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body style="background: #EEEEEE;">
+<body style="background: #E0FFFF;">
 
 <div id="atendente_nav">
       <%- flash.each do |name, msg| -%>
@@ -17,16 +17,14 @@
 
       <% if atendente_signed_in? -%>
         <div id="atendente_login_box" style="float:right">
-          <%= current_atendente.email %> |
-          <%= link_to 'My info', edit_atendente_registration_path %> |
-          <%= link_to 'Sign out', destroy_atendente_session_path, :method => :delete %>
+          <%= 'Autenticado como #{current_atendente.nome}.' %> |
+          <%= link_to 'Clique aqui para sair', destroy_atendente_session_path, :method => :delete %>
         </div>
       <% end -%>
-      <% if medico_signed_in? -%>
-        <div id="medico_login_box" style="float:left">
-          <%= current_medico.email %> |
-          <%= link_to 'medico section', medicos_path %> |
-          <%= link_to 'Sign out', destroy_medico_session_path, :method => :delete %>
+      <% else if medico_signed_in? -%>
+        <div id="medico_login_box" style="float:right">
+          <%= 'Autenticado como #{current_medico.nome}.' %> |
+          <%= link_to 'Clique aqui para sair', destroy_medico_session_path, :method => :delete %>
         </div>
       <% end -%>
       <div style="clear:both"></div>
