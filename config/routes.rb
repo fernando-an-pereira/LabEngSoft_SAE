@@ -9,6 +9,8 @@ SAE::Application.routes.draw do
   match "pesquisa" => "pesquisa#index"
   match "pesquisa/pacientes=:nome" => "pesquisa#search"
   
+  match "selecionar_veiculo" => "selecionar_veiculo#index"
+  
   get "home/index"
 
   # The priority is based upon order of creation:
