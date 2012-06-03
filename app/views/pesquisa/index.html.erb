@@ -1,14 +1,6 @@
 <h1>Pesquisa de pacientes</h1>
 
-<% if @pacientes.first.nil? %>
-	Erro.<br/>
-<% else %>
-	<% render :partial => "paciente/search", :locals => @paciente %>
-<% end %>
-
-<% if @pacientes.empty? %>
-	Erro2.<br/>
-<% end %>
+	<%= render :partial => "search" %>
 
 <% if @pacientes.empty? %>
 	Nenhum paciente encontrado.
@@ -25,10 +17,7 @@
     <tr>
       <td><%= paciente.id %></td>
       <td><%= paciente.nome%></td>
-      <td><%= link_to 'Mostrar', paciente %></td>
-      <td><%= link_to 'Selecionar', edit_pesquisa_path(pesquisa) %></td>
     </tr>
-    end
   <% end %>
 <% end %>
 

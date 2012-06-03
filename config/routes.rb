@@ -18,8 +18,8 @@ SAE::Application.routes.draw do
     root :to => 'home#index'
   end
 
-  match "pesquisa" => "pesquisa#index"
-  match "pesquisa/pacientes=:nome" => "pesquisa#search"
+  match "pesquisa" => "pesquisa#index", :via => :get
+  match "pesquisa/pacientes" => "pesquisa#search", :via => :get, :as => 'pesquisa_search'
   
   match "selecionar_veiculo" => "selecionar_veiculo#index"
   
