@@ -5,6 +5,14 @@ SAE::Application.routes.draw do
   devise_for :pacientes
   devise_for :atendentes
   devise_for :medicos
+  
+  authenticated :medico do
+    root :to => 'home#index'
+  end
+  
+  authenticated :atendente do
+    root :to => 'home#index'
+  end
 
   match "pesquisa" => "pesquisa#index"
   match "pesquisa/pacientes=:nome" => "pesquisa#search"
@@ -60,6 +68,7 @@ SAE::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
+  #root :to => 'devise/sessions#new'
   root :to => 'home#index'
 
   # See how all your routes lay out with "rake routes"
