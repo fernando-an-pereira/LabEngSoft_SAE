@@ -13,6 +13,10 @@ SAE::Application.routes.draw do
   authenticated :atendente do
     root :to => 'home#index'
   end
+  
+  authenticated :paciente do
+    root :to => 'home#index'
+  end
 
   match "pesquisa" => "pesquisa#index"
   match "pesquisa/pacientes=:nome" => "pesquisa#search"
