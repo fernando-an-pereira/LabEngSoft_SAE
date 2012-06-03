@@ -1,0 +1,2 @@
+class SelecionarVeiculoController < ApplicationController
+end
