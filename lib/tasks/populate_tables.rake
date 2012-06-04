@@ -31,5 +31,12 @@ namespace :db do
     atendente = Atendente.new(:email => 'atendente@tatu.gov.br', :password => 'atendente', :password_confirmation => 'atendente', :nome => "Atendente de Souza", :CPF => '999.999.999-1', :endereco => "Casa da Mãe, 123", :CRE => '100.000.000-1')
     atendente.save
     
+    veiculo_de_saude = VeiculoDeSaude.new(:RENAVAM => '60000000-0', :latitude => '-22.116296' , :longitude => '-45.050511', :ocupado => 'true')
+    veiculo_de_saude.save
+    veiculo_de_saude = VeiculoDeSaude.new(:RENAVAM => '70000000-0', :latitude => '-22.116654' , :longitude => '-45.053129', :ocupado => 'true')
+    veiculo_de_saude.save
+    veiculo_de_saude = VeiculoDeSaude.new(:RENAVAM => '80000000-0', :latitude => '-22.120829' , :longitude => '-45.052185', :ocupado => 'true')
+    veiculo_de_saude.save
+
   end
 end

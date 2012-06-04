@@ -42,7 +42,23 @@ function setMapAddress( address )
 	} );
 }
 
-setMapAddress( "São Lourenço - MG" );
+setMapAddress( "Sao Lourenco, MG" );
+
+function getMarkers(){
+	var icon = new GIcon();
+    icon.image = "http://labs.google.com/ridefinder/images/mm_20_red.png";
+    icon.iconSize = new GSize(12, 20);
+    icon.iconAnchor = new GPoint(6, 20);
+    icon.infoWindowAnchor = new GPoint(5, 1);
+    //map.setCenter(new GLatLng(38.988369, -76.93511), 13);
+    
+    var lat = document.getElementById("lat").firstChild.nodeValue;
+    var lng = document.getElementById("long").firstChild.nodeValue;
+    var marker = new GMarker(new GLatLng(lat, lng), icon);
+    map.addOverlay(marker);
+    
+}
+
 /* ]]> */
 </script>
 
