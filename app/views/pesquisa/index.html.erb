@@ -3,7 +3,7 @@
 	<%= render :partial => "search" %>
 
 <% if @pacientes.empty? %>
-	Nenhum paciente encontrado.
+	<i>Nenhum paciente encontrado.</i>
 <% else %>
   <table>
     <tr>
@@ -17,6 +17,8 @@
     <tr>
       <td><%= paciente.id %></td>
       <td><%= paciente.nome%></td>
+      <td><%= link_to 'Mostrar', paciente %></td>
+      <td><%= link_to 'Selecionar', paciente %></td>
     </tr>
   <% end %>
 <% end %>

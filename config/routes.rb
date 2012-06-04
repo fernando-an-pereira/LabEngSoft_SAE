@@ -1,6 +1,7 @@
 SAE::Application.routes.draw do
 
   resources :registro_de_emergencia
+  resources :paciente
   
   devise_for :pacientes
   devise_for :atendentes

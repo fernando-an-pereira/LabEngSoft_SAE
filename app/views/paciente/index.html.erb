@@ -1,0 +1,31 @@
+<h1>Lista de todos os pacientes</h1>
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Nome</th>
+    <th>CPF</th>
+    <th>Endereco</th>
+    <th>email</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @paciente.each do |paciente| %>
+  <tr>
+    <td><%= paciente.id %></td>
+    <td><%= paciente.nome %></td>
+    <td><%= paciente.CPF %></td>
+    <td><%= paciente.endereco %></td>
+    <td><%= paciente.email %></td>
+    <td><%= link_to 'Mostrar', paciente %></td>
+    <td><%= link_to 'Editar', edit_paciente_path(paciente) %></td>
+    <td><%= link_to 'Remover', paciente, confirm: 'Tem certeza que deseja deletar este paciente?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Registro de emergencium', new_registro_de_emergencium_path %>
