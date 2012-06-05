@@ -1,6 +1,6 @@
 class Atendente < Pessoa
 
-  default_scope where(:role => 'atendente')
+#  default_scope where(:role => 'atendente')
   
   attr_accessible :CRE
   
