@@ -5,7 +5,7 @@ namespace :db do
     Rake::Task['db:reset'].invoke
     
     paciente = Paciente.new(:email => 'paciente@tatu.gov.br', :password => 'paciente', :password_confirmation => 'paciente', :nome => "Paciente de Souza", :CPF => '123.456.789-0', :endereco => "Casa da Tia, 1234")
-    paciente.prontuario = Prontuario.new(:data => '04/06/2012', :observacao => 'Paciente de Souza')
+    paciente.prontuario = Prontuario.new(:data => '04/06/2012', :observacao => 'Paciente de Souzaq')
     paciente.save
     paciente = Paciente.new(:email => 'jose.carvalho@tatu.net', :password => 'tatusecret', :password_confirmation => 'tatusecret', :nome => "Jose Carvalho", :CPF => '059.468.316-60', :endereco => "Rua 4, 2")
     paciente.prontuario = Prontuario.new(:data => '05/06/2012', :observacao => 'Jose Carvalho')

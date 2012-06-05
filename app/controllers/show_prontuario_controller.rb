@@ -5,10 +5,10 @@ class ShowProntuarioController < ApplicationController
 	
 	def show
 		paciente = Paciente.find(params[:paciente_id])
-		@prontuario = Prontuario.find(params[:prontuario_id])
+		@prontuario = paciente.prontuario
+		@exames = paciente.prontuario.exame
 		respond_to do |format|
 			format.html
-			format.json  { render :json => @prontuario }
 		end
 	end
 end
