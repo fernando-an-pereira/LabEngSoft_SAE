@@ -1,0 +1,22 @@
+<h1>Prontuario</h1>
+<table>
+  <tr>
+    <th>Data</th>
+    <th>Observacao</th>
+    <th>Registro De Emergencia</th>
+    <th>Prescricao</th>
+    <th>Exames</th>
+    <th></th>
+  </tr>
+ 
+<% @prontuario.each do |prontuario| %>
+  <tr>
+    <td><%= prontuario.data %></td>
+    <td><%= prontuario.observacao %></td>
+    <td><%= prontuario.registro_de_emergencia.data %></td>
+    <td><%= prontuario.prescricao.nomeMedicamento %></td>
+    <td><%= prontuario.exame.tipo %></td>
+    <td><%= link_to 'Details', visualizar_prontuario_path  %></td>
+    <td><%= link_to 'New', atualizar_prontuario_path %></td>
+<% end %>
+</table>
