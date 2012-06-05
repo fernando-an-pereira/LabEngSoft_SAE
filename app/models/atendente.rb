@@ -1,11 +1,7 @@
-class Atendente < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+class Atendente < Pessoa
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :nome, :endereco, :CPF, :CRE
-  # attr_accessible :title, :body
+  default_scope where(:role => 'atendente')
+  
+  attr_accessible :CRE
+  
 end

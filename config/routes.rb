@@ -1,21 +1,11 @@
 SAE::Application.routes.draw do
 
+  devise_for :pessoas
+
   resources :registro_de_emergencia
   resources :paciente
   
-  devise_for :pacientes
-  devise_for :atendentes
-  devise_for :medicos
-  
-  authenticated :medico do
-    root :to => 'home#index'
-  end
-  
-  authenticated :atendente do
-    root :to => 'home#index'
-  end
-  
-  authenticated :paciente do
+  authenticated :pessoa do
     root :to => 'home#index'
   end
 
