@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  nomeDoLaboratorio: MyString
+  tipo: MyString
+  resultado: MyString
+  data: 2012-06-04 18:53:45
+
+two:
+  nomeDoLaboratorio: MyString
+  tipo: MyString
+  resultado: MyString
+  data: 2012-06-04 18:53:45
