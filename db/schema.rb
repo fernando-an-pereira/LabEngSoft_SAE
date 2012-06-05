@@ -11,7 +11,81 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120605020348) do
+ActiveRecord::Schema.define(:version => 20120605023023) do
+
+  create_table "atendentes", :force => true do |t|
+    t.string   "email",                  :default => "", :null => false
+    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "nome"
+    t.text     "endereco"
+    t.string   "CPF"
+    t.string   "CRE"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+  end
+
+  add_index "atendentes", ["email"], :name => "index_atendentes_on_email", :unique => true
+  add_index "atendentes", ["reset_password_token"], :name => "index_atendentes_on_reset_password_token", :unique => true
+
+  create_table "exames", :force => true do |t|
+    t.string   "nomeDoLaboratorio"
+    t.string   "tipo"
+    t.string   "resultado"
+    t.datetime "data"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  create_table "medicos", :force => true do |t|
+    t.string   "email",                  :default => "", :null => false
+    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "nome"
+    t.text     "endereco"
+    t.string   "CPF"
+    t.string   "CRM"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+  end
+
+  add_index "medicos", ["email"], :name => "index_medicos_on_email", :unique => true
+  add_index "medicos", ["reset_password_token"], :name => "index_medicos_on_reset_password_token", :unique => true
+
+  create_table "pacientes", :force => true do |t|
+    t.string   "email",                  :default => "", :null => false
+    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "nome"
+    t.text     "endereco"
+    t.string   "CPF"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+  end
+
+  add_index "pacientes", ["email"], :name => "index_pacientes_on_email", :unique => true
+  add_index "pacientes", ["reset_password_token"], :name => "index_pacientes_on_reset_password_token", :unique => true
 
   create_table "pessoas", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -37,11 +111,20 @@ ActiveRecord::Schema.define(:version => 20120605020348) do
   add_index "pessoas", ["email"], :name => "index_pessoas_on_email", :unique => true
   add_index "pessoas", ["reset_password_token"], :name => "index_pessoas_on_reset_password_token", :unique => true
 
+  create_table "prescricaos", :force => true do |t|
+    t.string   "nomeMedicamento"
+    t.string   "dosagem"
+    t.string   "frequencia"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "prontuarios", :force => true do |t|
     t.text     "observacao"
     t.date     "data"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "paciente_id"
   end
 
   create_table "registro_de_emergencia", :force => true do |t|

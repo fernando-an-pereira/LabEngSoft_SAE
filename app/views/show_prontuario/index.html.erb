@@ -1,0 +1,6 @@
+<%= form_tag show_prontuario_path, :method => :get do %>
+	id_paciente: 
+	<% label_tag(:paciente_id, "Paciente_ID:") %>
+	<%= text_field_tag(:paciente_id) %>
+	<% submit_tag "Pesquisar" %>
+<% end %>
