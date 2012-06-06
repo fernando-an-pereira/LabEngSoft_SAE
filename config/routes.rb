@@ -2,8 +2,11 @@ SAE::Application.routes.draw do
 
   devise_for :pessoas
 
-  resources :registro_de_emergencia
-  resources :paciente
+  resources :paciente do
+    resources :registro_de_emergencia
+  end
+  
+  match "answer_paciente" => "registro_de_emergencia#answer", :as => 'answer_paciente'
   
   authenticated :pessoa do
     root :to => 'home#index'
@@ -15,10 +18,12 @@ SAE::Application.routes.draw do
   match "pesquisa" => "pesquisa#index", :via => :get
   match "pesquisa/pacientes" => "pesquisa#search", :via => :get, :as => 'pesquisa_search'
   
+  
   match "selecionar_veiculo" => "selecionar_veiculo#index"
   
   match "show_prontuario" => "show_prontuario#show", :via => :get, :as => 'show_prontuario'
   match "index_prontuario" => "show_prontuario#index", :via => :get, :as => 'index_prontuario'
+  
   get "home/index"
 
   # The priority is based upon order of creation:

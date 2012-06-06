@@ -5,6 +5,7 @@ class CreateExames < ActiveRecord::Migration
       t.string :tipo
       t.string :resultado
       t.datetime :data
+      t.references :prontuario
 
       t.timestamps
     end
