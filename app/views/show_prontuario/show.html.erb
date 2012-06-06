@@ -1,0 +1,36 @@
+<h1>Prontuario</h1>
+  <p>
+    <b>Data</b>
+    <%= @prontuario.data %>
+  </p>
+  <p>
+    <b>Observacoes</b>
+    <%= @prontuario.observacao %>
+  </p>
+  
+  <br />
+
+  <h2>Exames</h2>
+  <table>
+    <tr>
+      <th>Data</th>
+      <th>Laboratorio</th>
+      <th>Resultado</th>
+      <th>Tipo</th>
+      <th></th>
+      <th></th>
+    </tr>
+ 
+  <% @exames.each do |exame| %>
+    <tr>
+      <td><%= exame.data %></td>
+      <td><%= exame.nomeDoLaboratorio %></td>
+      <td><%= exame.resultado %></td>
+      <td><%= exame.tipo %></td>
+    </tr>
+  <% end %>
+  </table>	
+  
+  <br />
+  
+<%= link_to 'Back', index_prontuario_path %>

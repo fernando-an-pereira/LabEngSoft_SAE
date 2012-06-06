@@ -103,9 +103,9 @@ ActiveRecord::Schema.define(:version => 20120605023023) do
     t.string   "CRM"
     t.string   "CRE"
     t.string   "endereco"
+    t.string   "type"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
-    t.string   "role"
   end
 
   add_index "pessoas", ["email"], :name => "index_pessoas_on_email", :unique => true

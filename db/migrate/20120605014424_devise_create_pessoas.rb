@@ -38,6 +38,7 @@ class DeviseCreatePessoas < ActiveRecord::Migration
       t.string :CRM
       t.string :CRE
       t.string :endereco
+      t.string :type
 
       t.timestamps
     end

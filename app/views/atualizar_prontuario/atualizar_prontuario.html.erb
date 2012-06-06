@@ -1,0 +1,56 @@
+<p id="notice"><%= notice %></p>
+ 
+<p>
+  <b>Name:</b>
+  <%= @prontuario.data %>
+</p>
+ 
+<p>
+  <b>Title:</b>
+  <%= @postuario.observacao %>
+</p>
+
+<h2>Registros de emergencia</h2>
+<% @prontuario.registro_de_emergencia.each do |registro| %>
+  <p>
+    <b>Data:</b>
+    <%= registro.data %>
+  </p>
+  <p>
+    <b>Causas:</b>
+    <%= registro.causas %>
+  </p>
+  <p>
+    <b>Gravidade:</b>
+    <%= registro.gravidade %>
+  </p> 
+  <p>
+    <b>Localidade:</b>
+    <%= registro.localidade %>
+  </p>
+<% end %>
+
+<h2>Adicione oregistro de emergencia:</h2>
+<%= form_for([@prontuario, @prontuario.registro_de_emergencia.build]) do |f| %>
+  <div class="field">
+    <%= f.label :data %><br />
+    <%= f.text_field :data %>
+  </div>
+  <div class="field">
+    <%= f.label :causas %><br />
+    <%= f.text_area :causas %>
+  </div>
+   <div class="field">
+    <%= f.label :gravidade %><br />
+    <%= f.text_area :gravidade %>
+  </div>
+   <div class="field">
+    <%= f.label :localidade %><br />
+    <%= f.text_area :localidade %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+ 
+<%= link_to 'Cancelar', atualizar_prontuario_path (@prontuario) %>
