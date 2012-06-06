@@ -1,0 +1,12 @@
+<h1>Mensagens</h1>
+<% @mensagens.each do |mensagem| %>
+  <div id="mensagem">
+    <p style="font-weight:bold">
+      <%= mensagem.remetente.class %>:
+    </p>
+    <%= mensagem.conteudo %>
+    <br>
+  </div>
+<% end %>
+
+<%= render "mensagem_form" %>

@@ -6,11 +6,11 @@ class HomeController < ApplicationController
     #definir redirecionamentos para cada um dos usuários
     if(pessoa_signed_in?)
       if(atendente?)
-#       redirect_to (current_pessoa)
+       redirect_to chamada_enviarMensagem_path
       elsif(medico?)
-#       redirect_to (current_pessoa)
+       redirect_to chamada_enviarMensagem_path
       elsif(paciente?)
-#       redirect_to (current_pessoa)
+       redirect_to chamada_enviarMensagem_path
       end
     end
   end

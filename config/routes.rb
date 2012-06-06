@@ -8,7 +8,10 @@ SAE::Application.routes.draw do
   authenticated :pessoa do
     root :to => 'home#index'
   end
-
+  
+  match "chamada/enviarMensagem" => "chamada#enviarMensagem", :via => :put
+  match "chamada/mensagem" => "chamada#mensagem"
+  
   match "pesquisa" => "pesquisa#index", :via => :get
   match "pesquisa/pacientes" => "pesquisa#search", :via => :get, :as => 'pesquisa_search'
   
