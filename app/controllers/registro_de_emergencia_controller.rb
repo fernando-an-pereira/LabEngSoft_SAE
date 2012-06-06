@@ -40,11 +40,13 @@ class RegistroDeEmergenciaController < ApplicationController
   # POST /registro_de_emergencia
   # POST /registro_de_emergencia.json
   def create
+	@paciente = Paciente.find(params[:id])
+	@prontuario = Prontuario.find(@paciente.id)
     @registro_de_emergencium = RegistroDeEmergencium.new(params[:registro_de_emergencium])
 
     respond_to do |format|
       if @registro_de_emergencium.save
-        format.html { redirect_to @registro_de_emergencium, notice: 'Registro de emergencium was successfully created.' }
+        format.html { redirect_to @registro_de_emergencium, notice: 'Registro de emergencia criado com sucesso.' }
         format.json { render json: @registro_de_emergencium, status: :created, location: @registro_de_emergencium }
       else
         format.html { render action: "new" }

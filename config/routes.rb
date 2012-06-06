@@ -2,8 +2,13 @@ SAE::Application.routes.draw do
 
   devise_for :pessoas
 
-  resources :registro_de_emergencia
-  resources :paciente
+  
+    
+  match "registrar_emergencia" => "registrar_emergencia#answer", :via => :get, :as => 'registrar_emergencia'
+	
+  resources :paciente do
+	resources :registro_de_emergencia
+  end
   
   authenticated :pessoa do
     root :to => 'home#index'
@@ -11,6 +16,7 @@ SAE::Application.routes.draw do
 
   match "pesquisa" => "pesquisa#index", :via => :get
   match "pesquisa/pacientes" => "pesquisa#search", :via => :get, :as => 'pesquisa_search'
+  
   
   match "selecionar_veiculo" => "selecionar_veiculo#index"
   

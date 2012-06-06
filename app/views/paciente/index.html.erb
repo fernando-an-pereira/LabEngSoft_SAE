@@ -21,7 +21,7 @@
     <td><%= paciente.email %></td>
     <td><%= link_to 'Mostrar', paciente %></td>
     <td><%= link_to 'Editar', edit_paciente_path(paciente) %></td>
-    <td><%= link_to 'Remover', paciente, confirm: 'Tem certeza que deseja deletar este paciente?', method: :delete %></td>
+    <td><%= link_to 'Remover', paciente, confirm: 'Tem certeza que deseja apagar este paciente?', method: :delete %></td>
   </tr>
 <% end %>
 </table>

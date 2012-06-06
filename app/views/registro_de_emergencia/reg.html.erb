@@ -1,0 +1,11 @@
+<h2>Novo registro de emergencia para paciente.</h2>
+
+<div>
+	ID: <%= @paciente.id %></br>
+	Nome: <%= @paciente.nome %>
+</div>
+
+<%= render :partial => "form" %>
+
+<%= link_to "Cancelar", home_atendente_path %> | 
+<%= link_to "Voltar", :back %>
