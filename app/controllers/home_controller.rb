@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   
-  include RolesHelper
+  include TypesHelper
   
   def index
     #definir redirecionamentos para cada um dos usuários

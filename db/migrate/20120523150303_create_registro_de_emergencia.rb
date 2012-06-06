@@ -5,6 +5,9 @@ class CreateRegistroDeEmergencia < ActiveRecord::Migration
       t.text :localidadeEmergencia
       t.text :gravidade
       t.text :causas
+      t.references :prontuario
+      t.references :atendente
+      t.references :medico
 
       t.timestamps
     end

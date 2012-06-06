@@ -4,6 +4,7 @@ class CreatePrescricaos < ActiveRecord::Migration
       t.string :nomeMedicamento
       t.string :dosagem
       t.string :frequencia
+      t.references :prontuario
 
       t.timestamps
     end
