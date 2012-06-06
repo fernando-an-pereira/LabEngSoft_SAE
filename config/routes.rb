@@ -9,11 +9,15 @@ SAE::Application.routes.draw do
   match "answer_paciente" => "registro_de_emergencia#answer", :as => 'answer_paciente'
   
   authenticated :pessoa do
-    root :to => 'home#index'
+    root :to => 'chamada#inicia'
   end
   
   match "chamada/enviarMensagem" => "chamada#enviarMensagem", :via => :put
-  match "chamada/mensagem" => "chamada#mensagem"
+  match "chamada/:id" => "chamada#mensagem", :as => 'chamada'
+  match "chamada/esperaAtendimento/:id" => "chamada#esperaAtendimento", :as => 'esperaAtendimento'
+  match "chamada/esperaConsulta/:id" => "chamada#esperaConsulta", :as => 'esperaConsulta'
+  match "chamada/esperaPaciente/:id" => "chamada#esperaPaciente", :as => 'esperaPaciente'
+#  match "chamada/inicia" => "chamada#inicia", :as => 'inicia_chamada'
   
   match "pesquisa" => "pesquisa#index", :via => :get
   match "pesquisa/pacientes" => "pesquisa#search", :via => :get, :as => 'pesquisa_search'

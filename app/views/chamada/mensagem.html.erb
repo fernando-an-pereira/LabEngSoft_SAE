@@ -1,9 +1,9 @@
 <h1>Mensagens</h1>
 <% @mensagens.each do |mensagem| %>
   <div id="mensagem">
-    <p style="font-weight:bold">
-      <%= mensagem.remetente.class %>:
-    </p>
+    <b>
+      <%= mensagem.remetente %>:
+    </b>
     <%= mensagem.conteudo %>
     <br>
   </div>
