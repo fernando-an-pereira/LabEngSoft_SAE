@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120605023023) do
+ActiveRecord::Schema.define(:version => 20120605020348) do
 
   create_table "atendentes", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20120605023023) do
     t.string   "tipo"
     t.string   "resultado"
     t.datetime "data"
+    t.integer  "prontuario_id"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
   end
@@ -115,6 +116,7 @@ ActiveRecord::Schema.define(:version => 20120605023023) do
     t.string   "nomeMedicamento"
     t.string   "dosagem"
     t.string   "frequencia"
+    t.integer  "prontuario_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end
@@ -122,9 +124,9 @@ ActiveRecord::Schema.define(:version => 20120605023023) do
   create_table "prontuarios", :force => true do |t|
     t.text     "observacao"
     t.date     "data"
+    t.integer  "paciente_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.integer  "paciente_id"
   end
 
   create_table "registro_de_emergencia", :force => true do |t|
@@ -132,6 +134,9 @@ ActiveRecord::Schema.define(:version => 20120605023023) do
     t.text     "localidadeEmergencia"
     t.text     "gravidade"
     t.text     "causas"
+    t.integer  "prontuario_id"
+    t.integer  "atendente_id"
+    t.integer  "medico_id"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
   end

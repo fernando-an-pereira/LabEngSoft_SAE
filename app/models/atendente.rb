@@ -4,6 +4,6 @@ class Atendente < Pessoa
   
   attr_accessible :CRE
   
-  has_many :registro_de_emergencia
+  has_many :registro_de_emergencia, :foreign_key => "atendente_id"
   
 end

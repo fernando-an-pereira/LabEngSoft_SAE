@@ -24,7 +24,9 @@ class RegistroDeEmergenciaController < ApplicationController
   # GET /registro_de_emergencia/new
   # GET /registro_de_emergencia/new.json
   def new
-    @registro_de_emergencium = RegistroDeEmergencium.new
+	@paciente = Paciente.find(params[:id])
+	@prontuario = Prontuario.find(@paciente.id)
+    @registro_de_emergencium = @prontuario.RegistroDeEmergencium.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -81,5 +83,8 @@ class RegistroDeEmergenciaController < ApplicationController
       format.html { redirect_to registro_de_emergencia_url }
       format.json { head :no_content }
     end
+  end
+  
+  def answer
   end
 end

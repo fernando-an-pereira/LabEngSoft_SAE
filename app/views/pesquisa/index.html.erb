@@ -17,8 +17,8 @@
     <tr>
       <td><%= paciente.id %></td>
       <td><%= paciente.nome%></td>
+      <td><%= link_to 'Selecionar', new_paciente_registro_de_emergencium_path(paciente, :id => paciente.id) %></td>
       <td><%= link_to 'Mostrar', paciente %></td>
-      <td><%= link_to 'Selecionar', paciente_registro_de_emergencium_path(paciente, :id => paciente.id), :method => :post %></td>
     </tr>
   <% end %>
 <% end %>
