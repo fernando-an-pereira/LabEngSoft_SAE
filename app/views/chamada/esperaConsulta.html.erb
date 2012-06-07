@@ -1,0 +1,29 @@
+<script>
+$(document).ready(
+  function(){
+    setInterval(function(){
+      $.getJSON('<%= "#{esperaConsulta_url}.json"  %>', 
+        function(data) {
+          if(data.redirect) {
+            window.location.href = data.redirect;
+          }
+          else {
+		    $("#espera").html(data.espera);
+		  }
+		});	
+    }, 3000);
+  });
+</script>
+
+<h1>Esperando Atendimento</h1>
+<br>
+
+Você é a posição de número
+<div id="espera">
+  <% if ! @espera.nil? -%>
+    <%= @espera + 1 %>
+  <% else -%>
+    <%= 0 %>
+  <% end -%>
+</div>
+na fila de espera pela consulta.

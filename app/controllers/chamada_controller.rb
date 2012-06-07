@@ -79,9 +79,14 @@ class ChamadaController < ApplicationController
   end
   
   def esperaConsulta
-    @espera = @@pacientesEsperaConsulta.index(current_pessoa)
-    if(@espera.nil?)
-      redirect_to chamada_path(current_pessoa)
+    respond_to do |format|
+      @espera = @@pacientesEsperaConsulta.index(current_pessoa)
+      format.html
+      if(@espera.nil?)
+        format.json { render :json => { :redirect => chamada_path(current_pessoa) } }
+      else
+        format.json { render :json => { :espera => @espera + 1 } }
+      end
     end
   end
   
