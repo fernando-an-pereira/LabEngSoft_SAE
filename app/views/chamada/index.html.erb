@@ -1,0 +1,17 @@
+<script>
+$(document).ready(
+  function(){
+    setInterval(function(){
+      $.getJSON('<%= "#{chamada_mensagem_url}.json"  %>', 
+        function(data) {
+		  $('<b>' + data.remetente + ':</b> ' + data.conteudo + '<br>').appendTo("#mensagens");
+		});	
+    }, 1000);
+  });
+</script>
+
+<h1> Mensagens </h1>
+
+<div id="mensagens">
+
+</div>

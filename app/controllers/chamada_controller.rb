@@ -22,34 +22,40 @@ class ChamadaController < ApplicationController
   
   @solicita = false
   
+  def index
+  end
+  
   def mensagem
     if(@@mensagens[current_pessoa].nil?)
       @@mensagens[current_pessoa] = Array.new
     end
-    @mensagens = @@mensagens[current_pessoa]
+    @mensagem = @@mensagens[current_pessoa].shift
     respond_to do |format|
       if(paciente? && @solicita) 
         @solicita = false
         format.html { redirect_to esperaConsulta_path(current_pessoa) }
       else
         format.html # mensagem.html.erb
+        format.json { render :json => @mensagem }
       end
-#      format.json { render :json => @mensagens }
+
     end 
 #    @@mensagens[current_pessoa].clear  
   end
   
   def enviarMensagem 
     mensagem1 = Mensagem.new
-    mensagem1.remetente = current_pessoa.class
+    mensagem1.remetente = current_pessoa.class.to_s
     mensagem2 = Mensagem.new
     mensagem2.remetente = "Eu"
     respond_to do |format|
-      mensagem1.conteudo = params[:conteudo]
-      mensagem2.conteudo = params[:conteudo]
-      appendMensagem(mensagem1, nil)
-      appendMensagem(mensagem2, current_pessoa);  
-      format.html { redirect_to chamada_path(current_pessoa) }
+      if (! params[:conteudo].empty?)
+        mensagem1.conteudo = params[:conteudo]
+        mensagem2.conteudo = params[:conteudo]
+        appendMensagem(mensagem1, nil)
+        appendMensagem(mensagem2, current_pessoa);  
+      end
+      format.html { redirect_to chamada_mensagem_path(current_pessoa) }
     end
     
   end
@@ -57,14 +63,14 @@ class ChamadaController < ApplicationController
   def esperaAtendimento
     @espera = @@pacientesEsperaAtendimento.index(current_pessoa)
     if(@espera.nil?)
-      redirect_to chamada_path
+      redirect_to chamada_mensagem_path
     end
   end
   
   def esperaConsulta
     @espera = @@pacientesEsperaConsulta.index(current_pessoa)
     if(@espera.nil?)
-      redirect_to chamada_path
+      redirect_to chamada_mensagem_path
     end
   end
   
@@ -85,12 +91,12 @@ class ChamadaController < ApplicationController
     if (medico?)
       @espera = @@medicosLivres.index(current_pessoa)
       if(@espera.nil?)
-        redirect_to chamada_path
+        redirect_to chamada_mensagem_path
       end
     elsif (atendente?)
       @espera = @@atendentesLivres.index(current_pessoa)
       if(@espera.nil?)
-        redirect_to chamada_path
+        redirect_to chamada_mensagem_path
       end
     end
   end
