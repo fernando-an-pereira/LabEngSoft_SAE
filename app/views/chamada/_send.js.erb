@@ -1,0 +1,24 @@
+<script>
+$(function() {
+  $(".button").click(function() {
+    var conteudo = $("input#conteudo").val();
+    $('<b>Eu:</b> ' + conteudo + '<br>').appendTo("#mensagens");
+    
+    $.ajax({
+      type: "POST",
+      url: "<%= chamada_enviarMensagem_url %>",
+      data: conteudo,
+      success: function() {
+        ;
+      }
+    });
+    
+    return false
+    
+  });
+});
+
+
+</script>
+
+  

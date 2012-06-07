@@ -6,12 +6,45 @@ $(document).ready(
         function(data) {
 		  $('<b>' + data.remetente + ':</b> ' + data.conteudo + '<br>').appendTo("#mensagens");
 		});	
-    }, 1000);
+    }, 3000);
   });
 </script>
+
+
+<script>
+$(function() {
+  $(".button").click(function() {
+    var conteudo = $("input#conteudo").val();
+    $('<b>Eu:</b> ' + conteudo + '<br>').appendTo("#mensagens");
+    
+    $.ajax({
+      type: "POST",
+      url: "<%= chamada_enviarMensagem_url %>",
+      data: conteudo,
+      success: function() {
+        ;
+      }
+    });
+    
+    return false
+    
+  });
+});
+</script>
+
+
+
+
 
 <h1> Mensagens </h1>
 
 <div id="mensagens">
-
 </div>
+
+<div id="enviar_mensagem">
+  <form name="texto" action="">
+      <input type="text" size="90" name="conteudo" id="conteudo" value="" />
+      <input type="submit" class="button" id="botao_enviar" value="Enviar" />
+  </form>
+</div>
+

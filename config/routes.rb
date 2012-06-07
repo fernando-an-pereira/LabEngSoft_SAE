@@ -12,7 +12,7 @@ SAE::Application.routes.draw do
     root :to => 'chamada#inicia'
   end
   
-  match "chamada/enviarMensagem" => "chamada#enviarMensagem", :via => :put
+  match "chamada/enviarMensagem" => "chamada#enviarMensagem", :via => :post
   match "chamada/mensagem/:id" => "chamada#mensagem", :as => 'chamada_mensagem'
   match "chamada/:id" => "chamada#index", :as => 'chamada'
   match "chamada/esperaAtendimento/:id" => "chamada#esperaAtendimento", :as => 'esperaAtendimento'

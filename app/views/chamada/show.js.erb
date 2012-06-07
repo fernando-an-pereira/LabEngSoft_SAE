@@ -1,0 +1,9 @@
+$(document).ready(
+  function(){
+    setInterval(function(){
+      $.getJSON('<%= "#{chamada_mensagem_url}/#{current_user.id}.json"  %>', 
+        function(data) {
+		  $('<b>' + data.remetente + ':</b> ' + data.conteudo + '<br>').appendTo("#mensagens");
+		});	
+    }, 1000);
+  });

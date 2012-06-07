@@ -44,18 +44,15 @@ class ChamadaController < ApplicationController
   end
   
   def enviarMensagem 
-    mensagem1 = Mensagem.new
-    mensagem1.remetente = current_pessoa.class.to_s
-    mensagem2 = Mensagem.new
-    mensagem2.remetente = "Eu"
+    mensagem = Mensagem.new
+    mensagem.remetente = current_pessoa.class.to_s
     respond_to do |format|
-      if (! params[:conteudo].empty?)
-        mensagem1.conteudo = params[:conteudo]
-        mensagem2.conteudo = params[:conteudo]
-        appendMensagem(mensagem1, nil)
-        appendMensagem(mensagem2, current_pessoa);  
+      conteudo = params.key(nil)
+      if (! conteudo.empty?)
+        mensagem.conteudo = conteudo
+        appendMensagem(mensagem) 
       end
-      format.html { redirect_to chamada_mensagem_path(current_pessoa) }
+      format.js
     end
     
   end
@@ -63,14 +60,14 @@ class ChamadaController < ApplicationController
   def esperaAtendimento
     @espera = @@pacientesEsperaAtendimento.index(current_pessoa)
     if(@espera.nil?)
-      redirect_to chamada_mensagem_path
+      redirect_to chamada_path
     end
   end
   
   def esperaConsulta
     @espera = @@pacientesEsperaConsulta.index(current_pessoa)
     if(@espera.nil?)
-      redirect_to chamada_mensagem_path
+      redirect_to chamada_path
     end
   end
   
@@ -91,12 +88,12 @@ class ChamadaController < ApplicationController
     if (medico?)
       @espera = @@medicosLivres.index(current_pessoa)
       if(@espera.nil?)
-        redirect_to chamada_mensagem_path
+        redirect_to chamada_path
       end
     elsif (atendente?)
       @espera = @@atendentesLivres.index(current_pessoa)
       if(@espera.nil?)
-        redirect_to chamada_mensagem_path
+        redirect_to chamada_path
       end
     end
   end
@@ -160,13 +157,11 @@ class ChamadaController < ApplicationController
     end
   end
   
-  def appendMensagem(mensagem, destinatario)
-    if(destinatario.nil?)
-      if @@pacienteFuncionario.has_key?(current_pessoa)
-        destinatario = @@pacienteFuncionario[current_pessoa]
-      else
-        destinatario = @@pacienteFuncionario.key(current_pessoa)
-      end
+  def appendMensagem(mensagem)
+    if @@pacienteFuncionario.has_key?(current_pessoa)
+      destinatario = @@pacienteFuncionario[current_pessoa]
+    else
+      destinatario = @@pacienteFuncionario.key(current_pessoa)
     end
     if @@mensagens[destinatario].nil? 
       @@mensagens[destinatario] = Array.new
