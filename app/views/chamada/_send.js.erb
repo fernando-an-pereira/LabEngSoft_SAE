@@ -2,6 +2,9 @@
 $(function() {
   $(".button").click(function() {
     var conteudo = $("input#conteudo").val();
+    if(conteudo == "") {
+      return false;
+    }
     $('<b>Eu:</b> ' + conteudo + '<br>').appendTo("#mensagens");
     
     $.ajax({

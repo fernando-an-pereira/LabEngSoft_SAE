@@ -1,3 +1,4 @@
+#encoding: utf-8 
 require 'thread'
 
 include TypesHelper
@@ -29,13 +30,21 @@ class ChamadaController < ApplicationController
     if(@@mensagens[current_pessoa].nil?)
       @@mensagens[current_pessoa] = Array.new
     end
-    @mensagem = @@mensagens[current_pessoa].shift
+    conteudo = ""
+    remetente = @@mensagens[current_pessoa][0].remetente
+    @@mensagens[current_pessoa].each do |mensagem|
+      conteudo += "#{mensagem.conteudo} <br>"
+    end
+    @@mensagens[current_pessoa].clear  
+    @mensagem = Mensagem.new
+    @mensagem.conteudo = conteudo
+    @mensagem.remetente = remetente
     respond_to do |format|
       if(paciente? && @solicita) 
         @solicita = false
         format.html { redirect_to esperaConsulta_path(current_pessoa) }
       else
-        format.html # mensagem.html.erb
+#        format.html # mensagem.html.erb
         format.json { render :json => @mensagem }
       end
 
@@ -58,16 +67,21 @@ class ChamadaController < ApplicationController
   end
   
   def esperaAtendimento
-    @espera = @@pacientesEsperaAtendimento.index(current_pessoa)
-    if(@espera.nil?)
-      redirect_to chamada_path
+    respond_to do |format|
+      @espera = @@pacientesEsperaAtendimento.index(current_pessoa)
+      format.html
+      if(@espera.nil?)
+        format.json { render :json => { :redirect => chamada_path(current_pessoa) } }
+      else
+        format.json { render :json => { :espera => @espera + 1 } }
+      end
     end
   end
   
   def esperaConsulta
     @espera = @@pacientesEsperaConsulta.index(current_pessoa)
     if(@espera.nil?)
-      redirect_to chamada_path
+      redirect_to chamada_path(current_pessoa)
     end
   end
   
@@ -86,14 +100,24 @@ class ChamadaController < ApplicationController
   
   def esperaPaciente
     if (medico?)
-      @espera = @@medicosLivres.index(current_pessoa)
-      if(@espera.nil?)
-        redirect_to chamada_path
+      respond_to do |format|
+        @espera = @@medicosLivres.index(current_pessoa)
+        format.html
+        if(@espera.nil?)
+          format.json { render :json => { :redirect => chamada_path(current_pessoa) } }
+        else
+          format.json { render :json => { :espera => @espera + 1 } }
+        end
       end
     elsif (atendente?)
-      @espera = @@atendentesLivres.index(current_pessoa)
-      if(@espera.nil?)
-        redirect_to chamada_path
+      respond_to do |format|
+        @espera = @@atendentesLivres.index(current_pessoa)
+        format.html
+        if(@espera.nil?)
+          format.json { render :json => { :redirect => chamada_path(current_pessoa) } }
+        else
+          format.json { render :json => { :espera => @espera + 1 } }
+        end
       end
     end
   end
@@ -101,7 +125,7 @@ class ChamadaController < ApplicationController
   def encerrarChamada
     if (medico?)
       medicoLivre(current_pessoa)
-      redirect_to chamada_esperaPaciente_path
+      redirect_to chamada_esperaPaciente_path(current_pessoa)
     elsif (atendente?)
       if(@solicita)
         @@pacienteFuncionario.key(current_pessoa).solicita = true
@@ -109,7 +133,7 @@ class ChamadaController < ApplicationController
         @solicita = false
       end
       atendenteLivre(current_pessoa)
-      redirect_to chamada_esperaPaciente_path
+      redirect_to chamada_esperaPaciente_path(current_pessoa)
     end
   end
   
