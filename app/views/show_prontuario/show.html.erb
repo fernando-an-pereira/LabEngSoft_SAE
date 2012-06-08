@@ -1,4 +1,4 @@
-<h1>Prontuario</h1>
+<h1>Prontuário</h1>
   <p>
     <b>Data</b>
     <%= @prontuario.data %>
@@ -9,7 +9,27 @@
   </p>
   
   <br />
-
+  
+  <h2>Registro de Emergência</h2>
+  <table>
+    <tr>
+      <th>Data</th>
+      <th>Causas</th>
+      <th>Gravidade</th>
+      <th>Localidade</th>
+      <th></th>
+    </tr>
+ 
+  <% @registros.each do |registro| %>
+    <tr>
+      <td><%= registro.data %></td>
+      <td><%= registro.causas %></td>
+      <td><%= registro.gravidade %></td>
+      <td><%= registro.localidadeEmergencia %></td>
+    </tr>
+  <% end %>
+  </table>
+  <br />
   <h2>Exames</h2>
   <table>
     <tr>
@@ -29,7 +49,29 @@
       <td><%= exame.tipo %></td>
     </tr>
   <% end %>
-  </table>	
+  </table>
+ 
+  <br />
+  <h2>Prescricao</h2>
+  <table>
+    <tr>
+      <th>Medicamento</th>
+      <th>Dosagem</th>
+      <th>Frequencia</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+ 
+  <% @medicamentos.each do |medicamento| %>
+    <tr>
+      <td><%= medicamento.nomeMedicamento %></td>
+      <td><%= medicamento.dosagem %></td>
+      <td><%= medicamento.frequencia %></td>
+    </tr>
+  <% end %>
+  </table>
+  
   
   <br />
   

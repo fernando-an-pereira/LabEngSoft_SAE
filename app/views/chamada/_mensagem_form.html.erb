@@ -1,0 +1,5 @@
+<%= form_tag("/chamada/enviarMensagem", :method => "put") do %>
+  <%= label_tag(:conteudo, "Mensagem:") %><br />
+  <%= text_area_tag(:conteudo) %>
+  <%= submit_tag("Enviar") %>
+<% end %>

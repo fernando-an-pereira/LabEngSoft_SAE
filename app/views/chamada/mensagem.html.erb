@@ -1,0 +1,13 @@
+<h1>Mensagens</h1>
+
+<% if ! @mensagem.nil? -%>
+  <div id="mensagem">
+    <b>
+      <%= @mensagem.remetente %>:
+    </b>
+    <%= @mensagem.conteudo %>
+    <br>
+  </div>
+<% end -%>
+
+<%= render "mensagem_form" %>
