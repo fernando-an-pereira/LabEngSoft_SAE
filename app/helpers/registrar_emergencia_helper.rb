@@ -1,0 +1,2 @@
+module RegistrarEmergenciaHelper
+end

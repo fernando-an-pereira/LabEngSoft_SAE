@@ -8,7 +8,7 @@ class PesquisaController < ApplicationController
   def search
 	condition = params[:nome]
   
-	@pacientes = Paciente.all
+	@pacientes = Paciente.all(:order => "nome")
 	
 	@pacientes.delete_if{ |p| p.nome.exclude? condition }
 

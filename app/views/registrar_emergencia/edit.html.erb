@@ -1,0 +1,8 @@
+<h1>Editar Registro de Emergencia</h1>
+
+<h2>Paciente: <%= @paciente.nome %></h2>
+
+<%= render 'form' %>
+
+<%= link_to 'Mostrar', paciente_registro_de_emergencium_path (@paciente, @registro_de_emergencium) %> |
+<%= link_to 'Voltar', paciente_registro_de_emergencia_path (@paciente) %>

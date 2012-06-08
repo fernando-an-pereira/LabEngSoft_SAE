@@ -1,4 +1,4 @@
-<%= form_for (@registro_de_emergencium) do |f| %>
+<%= form_for (@paciente, @registro_de_emergencium) do |f| %>
   <% if @registro_de_emergencium.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@registro_de_emergencium.errors.count, "error") %> prohibited this registro_de_emergencium from being saved:</h2>
@@ -27,6 +27,7 @@
     <%= f.label :causas %><br />
     <%= f.text_area :causas %>
   </div>
+  <%= f.hidden_field :paciente_id, :value => @paciente.id %>
   <div class="actions">
     <%= f.submit %>
   </div>

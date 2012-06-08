@@ -1,0 +1,31 @@
+<h1>Lista de Registros de Emergencia</h1>
+
+<h2>Paciente: <%= @paciente.nome %></h2>
+
+<table>
+  <tr>
+    <th>Data</th>
+    <th>Localidade</th>
+    <th>Gravidade</th>
+    <th>Causas</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @registro_de_emergencia.each do |registro_de_emergencium| %>
+  <tr>
+    <td><%= registro_de_emergencium.data %></td>
+    <td><%= registro_de_emergencium.localidadeEmergencia %></td>
+    <td><%= registro_de_emergencium.gravidade %></td>
+    <td><%= registro_de_emergencium.causas %></td>
+    <td><%= link_to 'Mostrar', paciente_registro_de_emergencium %></td>
+    <td><%= link_to 'Editar', edit_paciente_registro_de_emergencium_path(@paciente, registro_de_emergencium) %></td>
+    <td><%= link_to 'Destruir', paciente_registro_de_emergencium, confirm: 'Voce tem certeza que deseja apagar este registro?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Novo Registro de Emergencia', new_paciente_registro_de_emergencium_path(@paciente) %>
