@@ -12,14 +12,14 @@
 </head>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript">
+
   var cidade = new google.maps.LatLng("-22.110134","-45.052872");
   var veiculos = new Array();
   
   <% @veiculos_de_saude.each do |veiculo|  %>
-  veiculos.push(new google.maps.LatLng(<%= veiculo.latitude %>,<%= veiculo.longitude %>));
+  veiculos.push([new google.maps.LatLng(<%= veiculo.latitude %>,<%= veiculo.longitude %>),<%= veiculo.ocupado %>,<%= veiculo.RENAVAM %>]);
   <% end %>
-
-  var markers = [];
+  
   var iterator = 0;
 
   var map;
@@ -35,6 +35,8 @@
             mapOptions);
   }
 
+  var markersArray = [];
+
   function drop() {
     for (var i = 0; i < veiculos.length; i++) {
       setTimeout(function() {
@@ -42,17 +44,68 @@
       });
     }
   }
+  
+  function clearOverlays() {
+  if (markersArray) {
+    for (var i = 0; i < markersArray.length; i++ ) {
+      markersArray[i].setMap(null);
+    }
+  }
+  markersArray.splice(0,markersArray.length);
+}
 
-  function addMarker() {
 	var imageLivre = new google.maps.MarkerImage('assets/green_MarkerL.png');
 	var imageOcupado = new google.maps.MarkerImage('assets/red_MarkerO.png');
-    markers.push(new google.maps.Marker({
-      position: veiculos[iterator],
-      map: map,
-      draggable: false,
-      icon: imageOcupado }));
-    iterator++;
-  }
+
+  function addMarker() {
+		var image;
+	if(veiculos[iterator][1] == true)
+		image = imageOcupado;
+	else
+		image = imageLivre;
+    var marker = new google.maps.Marker({
+				 position: veiculos[iterator][0],
+				 map: map,
+				 draggable: false,
+				 icon: image,
+				 title: "RENAVAM: " + veiculos[iterator][2] });
+    
+    markersArray.push(marker);
+
+        google.maps.event.addListener(marker, 'click', function() {
+						
+			var ren = marker.title.slice(9);
+			
+			jQuery.ajax({
+				data: ren,
+				dataType: 'script',
+				type: 'post',
+				url: "/selecionar_veiculo/get_Status"
+			});
+						
+
+			
+			<% if @veiculo == nil %>
+				alert("veiculo não encontrado!");
+			<% end %>
+			
+			
+			veiculos.splice(0,veiculos.length);
+			
+			<% @veiculos_de_saude.each do |veiculo|  %>
+				veiculos.push([new google.maps.LatLng(<%= veiculo.latitude %>,<%= veiculo.longitude %>),<%= veiculo.ocupado %>,<%= veiculo.RENAVAM %>]);
+			<% end %>
+			
+			iterator = 0;
+			clearOverlays();
+			drop();
+			
+        });
+  
+  iterator++;
+  
+}
+  
   
  drop();
   
