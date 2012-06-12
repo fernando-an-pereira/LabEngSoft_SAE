@@ -4,7 +4,8 @@ class ShowProntuarioController < ApplicationController
 	end
 	
 	def show
-		@paciente = Paciente.find(params[:paciente_id])
+	#	@paciente = ChamadaController.pacienteFuncionario.key(current_pessoa);
+		@paciente = Paciente.find(params[:id])
 		@prontuario = @paciente.prontuario
 		@exames = @paciente.prontuario.exame
 		@registros = @paciente.prontuario.registro_de_emergencium

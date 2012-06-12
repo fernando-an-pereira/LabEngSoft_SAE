@@ -18,6 +18,7 @@ SAE::Application.routes.draw do
   match "chamada/esperaAtendimento/:id" => "chamada#esperaAtendimento", :as => 'esperaAtendimento'
   match "chamada/esperaConsulta/:id" => "chamada#esperaConsulta", :as => 'esperaConsulta'
   match "chamada/esperaPaciente/:id" => "chamada#esperaPaciente", :as => 'esperaPaciente'
+  match "chamada/encerrar" =>"chamada#encerrarChamada", :as => 'encerrar_chamada'
 #  match "chamada/inicia" => "chamada#inicia", :as => 'inicia_chamada'
   
   match "pesquisa" => "pesquisa#index", :via => :get
@@ -29,7 +30,6 @@ SAE::Application.routes.draw do
   match "selecionar_veiculo/atualiza_Status" => "selecionar_veiculo#atualiza_Status"
   
   match "show_prontuario" => "show_prontuario#show", :via => :get, :as => 'show_prontuario'
-  match "index_prontuario" => "show_prontuario#index", :via => :get, :as => 'index_prontuario'
   
   get "home/index"
 

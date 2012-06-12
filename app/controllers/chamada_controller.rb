@@ -24,6 +24,12 @@ class ChamadaController < ApplicationController
   @solicita = false
   
   def index
+    if medico?
+      respond_to do |format|
+        @paciente = @@pacienteFuncionario.key(current_pessoa)
+        format.html
+      end
+    end
   end
   
   def mensagem
@@ -92,8 +98,8 @@ class ChamadaController < ApplicationController
   
   def inicia
     if(paciente?)
-      solicitaAtendimento(current_pessoa)
-      redirect_to esperaAtendimento_path(current_pessoa)
+      solicitaConsulta(current_pessoa)
+      redirect_to esperaConsulta_path(current_pessoa)
     elsif(atendente?)
       atendenteLivre(current_pessoa)
       redirect_to esperaPaciente_path(current_pessoa)
@@ -128,17 +134,19 @@ class ChamadaController < ApplicationController
   end
   
   def encerrarChamada
-    if (medico?)
-      medicoLivre(current_pessoa)
-      redirect_to chamada_esperaPaciente_path(current_pessoa)
-    elsif (atendente?)
-      if(@solicita)
-        @@pacienteFuncionario.key(current_pessoa).solicita = true
-        solicitaConsulta(@@pacienteFuncionario.key(current_pessoa))
-        @solicita = false
+    respond_to do |format|
+      if (medico?)
+        medicoLivre(current_pessoa)
+        format.html { redirect_to root_path(current_pessoa) }
+      elsif (atendente?)
+        if(@solicita)
+          @@pacienteFuncionario.key(current_pessoa).solicita = true
+          solicitaConsulta(@@pacienteFuncionario.key(current_pessoa))
+          @solicita = false
+        end
+        atendenteLivre(current_pessoa)
+        format.html { redirect_to root_path(current_pessoa) }
       end
-      atendenteLivre(current_pessoa)
-      redirect_to chamada_esperaPaciente_path(current_pessoa)
     end
   end
   
@@ -181,7 +189,7 @@ class ChamadaController < ApplicationController
     if(@@pacientesEsperaConsulta.empty?)
       @@medicosLivres << medico
     else
-      paciente = @@pacientesEsperaAtendimento.shift
+      paciente = @@pacientesEsperaConsulta.shift
       @@pacienteFuncionario.merge!({ paciente => medico })
     end
   end
