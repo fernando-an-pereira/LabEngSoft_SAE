@@ -4,26 +4,25 @@ class SelecionarVeiculoController < ApplicationController
   # GET /selecionar_veiculo
   def index
     @veiculos_de_saude = VeiculoDeSaude.all
-    
+   
     respond_to do |format|
     format.html  # index.html.erb
     format.json  { render :json => @veiculos_de_saude }
   end
   
   def get_Status
-	@veiculo = VeiculoDeSaude.find(:first, :conditions => ['"RENAVAM" = ?', params[:RENAVAM]])
+	@veiculo = VeiculoDeSaude.find(:first, :conditions => ['"RENAVAM" like ?', params[:ren]])
 	@ocupado = @veiculo.ocupado
-	if @ocupado == true
-		@veiculo.ocupado = false
+	if @ocupado == false
+		@veiculo.ocupado = true
 		@veiculo.save
+		@resultado = VeiculoDeSaude.all
+		render :json => @resultado
+		#render :inline => "true"
+	else
+		render :inline => "false"
 	end
-	
-	respond_to do |format|
-		format.json { render json: @veiculo }
-    end
-	
   end
 
-  
   end
 end

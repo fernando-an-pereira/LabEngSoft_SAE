@@ -32,7 +32,7 @@ SAE::Application.routes.draw do
   match "pesquisa/pacientes" => "pesquisa#search", :via => :get, :as => 'pesquisa_search'
   
   match "selecionar_veiculo" => "selecionar_veiculo#index"
-  match 'selecionar_veiculo/get_Status' => "selecionar_veiculo#getStatus", :via => [:get, :post]
+  match "selecionar_veiculo/get_Status" => "selecionar_veiculo#get_Status"
   
   match "show_prontuario" => "show_prontuario#show", :via => :get, :as => 'show_prontuario'
   match "index_prontuario" => "show_prontuario#index", :via => :get, :as => 'index_prontuario'

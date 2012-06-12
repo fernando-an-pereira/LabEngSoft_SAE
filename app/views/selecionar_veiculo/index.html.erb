@@ -17,12 +17,12 @@
   var veiculos = new Array();
   
   <% @veiculos_de_saude.each do |veiculo|  %>
-  veiculos.push([new google.maps.LatLng(<%= veiculo.latitude %>,<%= veiculo.longitude %>),<%= veiculo.ocupado %>,<%= veiculo.RENAVAM %>]);
+	veiculos.push([new google.maps.LatLng(<%= veiculo.latitude %>,<%= veiculo.longitude %>),<%= veiculo.ocupado %>,<%= veiculo.RENAVAM %>]);
   <% end %>
   
   var iterator = 0;
-
   var map;
+  var markersArray = [];
 
   function initialize() {
     var mapOptions = {
@@ -34,8 +34,24 @@
     map = new google.maps.Map(document.getElementById("map_canvas"),
             mapOptions);
   }
-
-  var markersArray = [];
+  
+  function atualizaMarkers() {
+	setInterval( function() {
+					iterator = 0;
+					clearOverlays();
+					drop();
+					//alert("ocupado " + veiculos[0][1] + veiculos[1][1] + veiculos[2][1]);
+	},5000);
+  }
+  
+  function clearOverlays() {
+	  if (markersArray) {
+		for (var i = 0; i < markersArray.length; i++ ) {
+		  markersArray[i].setMap(null);
+		}
+	  }
+	  markersArray.splice(0,markersArray.length);
+  }
 
   function drop() {
     for (var i = 0; i < veiculos.length; i++) {
@@ -44,18 +60,9 @@
       });
     }
   }
-  
-  function clearOverlays() {
-  if (markersArray) {
-    for (var i = 0; i < markersArray.length; i++ ) {
-      markersArray[i].setMap(null);
-    }
-  }
-  markersArray.splice(0,markersArray.length);
-}
 
-	var imageLivre = new google.maps.MarkerImage('assets/green_MarkerL.png');
-	var imageOcupado = new google.maps.MarkerImage('assets/red_MarkerO.png');
+  var imageLivre = new google.maps.MarkerImage('assets/green_MarkerL.png');
+  var imageOcupado = new google.maps.MarkerImage('assets/red_MarkerO.png');
 
   function addMarker() {
 		var image;
@@ -76,42 +83,33 @@
 						
 			var ren = marker.title.slice(9);
 			
-			jQuery.ajax({
-				data: ren,
-				dataType: 'script',
-				type: 'post',
-				url: "/selecionar_veiculo/get_Status"
-			});
+			$.ajax({
+				url: "selecionar_veiculo/get_Status",
+				type: "POST",
+				data: {ren: ren},
+				success: function(e) {
+					if(e == "false")
+						alert("Veículo ocupado! Escolha outro veículo.");
+					else
 						
+						alert("Veículo redirecionado com sucesso! " + e[1]);
+				}
+			});
 
-			
-			<% if @veiculo == nil %>
-				alert("veiculo não encontrado!");
-			<% end %>
-			
-			
-			veiculos.splice(0,veiculos.length);
-			
-			<% @veiculos_de_saude.each do |veiculo|  %>
-				veiculos.push([new google.maps.LatLng(<%= veiculo.latitude %>,<%= veiculo.longitude %>),<%= veiculo.ocupado %>,<%= veiculo.RENAVAM %>]);
-			<% end %>
-			
-			iterator = 0;
-			clearOverlays();
-			drop();
+			atualizaMarkers();
 			
         });
   
-  iterator++;
+	iterator++;
   
-}
+  }
   
   
  drop();
+ atualizaMarkers();
   
 </script>
 </head>
 <body onload="initialize()">
 <div id="map_canvas" style="width: 500px; height: 400px;">map div</div>
-
 </body>
