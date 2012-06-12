@@ -3,19 +3,11 @@ SAE::Application.routes.draw do
   devise_for :pessoas
 
   resources :paciente do
-	match "registro_de_emergencia" => "registrar_emergencia#index", :via => :get, :as => 'registro_de_emergencia'
-	match "registro_de_emergencia/new" => "registrar_emergencia#new", :via => :get, :as => 'new_registro_de_emergencium'
-	match "registro_de_emergencia/:id" => "registrar_emergencia#show", :via => :get, :as => 'registro_de_emergencium'
-	match "registro_de_emergencia/:id/edit" => "registrar_emergencia#edit", :via => :get, :as => 'edit_registro_de_emergencium'
-	match "registro_de_emergencia" => "registrar_emergencia#create", :via => :post, :as => 'registro_de_emergencium'
-	match "registro_de_emergencia/:id" => "registrar_emergencia#update", :via => :put, :as => 'registro_de_emergencium'
-	match "registro_de_emergencia/:id" => "registrar_emergencia#delete", :via => :delete, :as => 'registro_de_emergencium'
+	resources :registro_de_emergencia
   end
   
-  match "answer_paciente" => "registrar_emergencia#answer", :as => 'answer_paciente'
+  match "answer_paciente" => "registro_de_emergencia#answer", :as => 'answer_paciente'
   
-  resources :registro_de_emergencia
-    
   authenticated :pessoa do
     root :to => 'chamada#inicia'
   end
