@@ -1,3 +1,6 @@
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/ui-lightness/jquery-ui.css" type="text/css" />
+
 <h1>Selecionar veículo de saúde</h1>
 <head>
 	<meta charset="utf-8"/>
@@ -37,11 +40,23 @@
   
   function atualizaMarkers() {
 	setInterval( function() {
-					iterator = 0;
-					clearOverlays();
-					drop();
-					//alert("ocupado " + veiculos[0][1] + veiculos[1][1] + veiculos[2][1]);
-	},5000);
+	 $.ajax({
+		url: "selecionar_veiculo/atualiza_Status",
+		type: "POST",
+		dataType: "json",
+		success: function(e) {
+		  resultado = e;
+			  for (var i = 0; i < resultado.length; i++) {
+				veiculos.push([new google.maps.LatLng(resultado[i].latitude, resultado[i].longitude), resultado[i].ocupado, resultado[i].RENAVAM]);
+			  }
+		}
+	  });
+	 
+	 iterator = 0;
+	 clearOverlays();
+	 drop();
+	  
+	},10000);
   }
   
   function clearOverlays() {
@@ -63,6 +78,30 @@
 
   var imageLivre = new google.maps.MarkerImage('assets/green_MarkerL.png');
   var imageOcupado = new google.maps.MarkerImage('assets/red_MarkerO.png');
+  
+  var resultado;
+  
+  $(function() {  
+	  
+	  $( "#dialog-confirm" ).dialog({
+		resizable: false,
+		height:180,
+		modal: false,
+		autoOpen: false,
+		buttons: {
+			"Sim": function() {
+				$(this).dialog("close");
+				atualizaMarkers();
+			},
+			"Cancelar": function() {
+				$(this).dialog("close");
+			}
+		}
+		});
+		
+		initialize();
+  });
+  
 
   function addMarker() {
 		var image;
@@ -80,36 +119,43 @@
     markersArray.push(marker);
 
         google.maps.event.addListener(marker, 'click', function() {
-						
+			
 			var ren = marker.title.slice(9);
 			
 			$.ajax({
 				url: "selecionar_veiculo/get_Status",
 				type: "POST",
 				data: {ren: ren},
+				dataType: "json",
 				success: function(e) {
-					if(e == "false")
-						alert("Veículo ocupado! Escolha outro veículo.");
-					else
-						
-						alert("Veículo redirecionado com sucesso! " + e[1]);
+					console.log(e);
+					if(e == false)
+						$("#dialog").dialog();
+					else {
+						resultado = e;
+						$("#dialog-confirm").dialog("open");
+					}
 				}
-			});
-
-			atualizaMarkers();
-			
+			});	
         });
   
 	iterator++;
   
   }
   
-  
  drop();
  atualizaMarkers();
   
 </script>
 </head>
-<body onload="initialize()">
+
 <div id="map_canvas" style="width: 500px; height: 400px;">map div</div>
-</body>
+
+<div id="dialog" title="Atenção!">
+	<p>Veículo ocupado! Escolha outro veículo.</p>
+</div>
+
+<div id="dialog-confirm" title="Redirecionar veículo">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Tem certeza de que este é o veículo que deverá ser redirecionado?</p>
+</div>
+

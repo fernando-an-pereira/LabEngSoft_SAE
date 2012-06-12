@@ -18,10 +18,14 @@ class SelecionarVeiculoController < ApplicationController
 		@veiculo.save
 		@resultado = VeiculoDeSaude.all
 		render :json => @resultado
-		#render :inline => "true"
 	else
 		render :inline => "false"
 	end
+  end
+
+  def atualiza_Status
+	@resultado = VeiculoDeSaude.all
+	render :json => @resultado
   end
 
   end
