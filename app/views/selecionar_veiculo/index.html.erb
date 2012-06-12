@@ -1,3 +1,6 @@
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/ui-lightness/jquery-ui.css" type="text/css" />
+
 <h1>Selecionar veículo de saúde</h1>
 <head>
 	<meta charset="utf-8"/>
@@ -12,17 +15,18 @@
 </head>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript">
+
   var cidade = new google.maps.LatLng("-22.110134","-45.052872");
   var veiculos = new Array();
   
   <% @veiculos_de_saude.each do |veiculo|  %>
-  veiculos.push(new google.maps.LatLng(<%= veiculo.latitude %>,<%= veiculo.longitude %>));
+	veiculos.push([new google.maps.LatLng(<%= veiculo.latitude %>,<%= veiculo.longitude %>),<%= veiculo.ocupado %>,<%= veiculo.RENAVAM %>]);
   <% end %>
-
-  var markers = [];
+  
   var iterator = 0;
-
   var map;
+  var markersArray = [];
+  var ren;
 
   function initialize() {
     var mapOptions = {
@@ -34,6 +38,36 @@
     map = new google.maps.Map(document.getElementById("map_canvas"),
             mapOptions);
   }
+  
+  function atualizaMarkers() {
+	setInterval( function() {
+	 $.ajax({
+		url: "selecionar_veiculo/atualiza_Status",
+		type: "POST",
+		dataType: "json",
+		success: function(e) {
+		  resultado = e;
+			  for (var i = 0; i < resultado.length; i++) {
+				veiculos.push([new google.maps.LatLng(resultado[i].latitude, resultado[i].longitude), resultado[i].ocupado, resultado[i].RENAVAM]);
+			  }
+		}
+	  });
+	 
+	 iterator = 0;
+	 clearOverlays();
+	 drop();
+	  
+	},3000);
+  }
+  
+  function clearOverlays() {
+	  if (markersArray) {
+		for (var i = 0; i < markersArray.length; i++ ) {
+		  markersArray[i].setMap(null);
+		}
+	  }
+	  markersArray.splice(0,markersArray.length);
+  }
 
   function drop() {
     for (var i = 0; i < veiculos.length; i++) {
@@ -43,22 +77,101 @@
     }
   }
 
+  var imageLivre = new google.maps.MarkerImage('assets/green_MarkerL.png');
+  var imageOcupado = new google.maps.MarkerImage('assets/red_MarkerO.png');
+  
+  var resultado;
+  
+  $(function() {
+  
+	  $( "#dialog" ).dialog({
+	    autoOpen: false
+	   });
+	  
+	  $( "#dialog-confirm" ).dialog({
+		resizable: false,
+		height:180,
+		modal: false,
+		autoOpen: false,
+		buttons: {
+			"Sim": function() {
+				$(this).dialog("close");
+				$.ajax({
+				  url: "selecionar_veiculo/set_Ocupado",
+				  type: "POST",
+				  data: {ren: ren},
+				  dataType: "json",
+				  success: function(e) {
+					if (e == false)
+						$("#dialog").dialog();
+					else {
+						resultado = e;
+						atualizaMarkers();
+					}
+				  }
+				})
+			  },
+			"Cancelar": function() {
+				$(this).dialog("close");
+			}
+		  }
+		});
+		
+		initialize();
+  });
+  
+
   function addMarker() {
-	var imageLivre = new google.maps.MarkerImage('assets/green_MarkerL.png');
-	var imageOcupado = new google.maps.MarkerImage('assets/red_MarkerO.png');
-    markers.push(new google.maps.Marker({
-      position: veiculos[iterator],
-      map: map,
-      draggable: false,
-      icon: imageOcupado }));
-    iterator++;
+		var image;
+	if(veiculos[iterator][1] == true)
+		image = imageOcupado;
+	else
+		image = imageLivre;
+    var marker = new google.maps.Marker({
+				 position: veiculos[iterator][0],
+				 map: map,
+				 draggable: false,
+				 icon: image,
+				 title: "RENAVAM: " + veiculos[iterator][2] });
+    
+    markersArray.push(marker);
+
+        google.maps.event.addListener(marker, 'click', function() {
+			
+			ren = marker.title.slice(9);
+			
+			$.ajax({
+				url: "selecionar_veiculo/get_Status",
+				type: "POST",
+				data: {ren: ren},
+				dataType: "json",
+				success: function(e) {
+					if(e == true)
+						$("#dialog").dialog("open");
+					else {
+						$("#dialog-confirm").dialog("open");
+					}
+				}
+			});	
+        });
+  
+	iterator++;
+  
   }
   
  drop();
+ atualizaMarkers();
   
 </script>
 </head>
-<body onload="initialize()">
+
 <div id="map_canvas" style="width: 500px; height: 400px;">map div</div>
 
-</body>
+<div id="dialog" title="Atenção!">
+	<p><span class="ui-dialog"></span>Veículo ocupado! Escolha outro veículo.</p>
+</div>
+
+<div id="dialog-confirm" title="Redirecionar veículo">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Tem certeza de que este é o veículo que deverá ser redirecionado?</p>
+</div>
+

@@ -3,7 +3,7 @@ SAE::Application.routes.draw do
   devise_for :pessoas
 
   resources :paciente do
-    resources :registro_de_emergencia
+	resources :registro_de_emergencia
   end
   
   match "answer_paciente" => "registro_de_emergencia#answer", :as => 'answer_paciente'
@@ -24,8 +24,10 @@ SAE::Application.routes.draw do
   match "pesquisa" => "pesquisa#index", :via => :get
   match "pesquisa/pacientes" => "pesquisa#search", :via => :get, :as => 'pesquisa_search'
   
-  
   match "selecionar_veiculo" => "selecionar_veiculo#index"
+  match "selecionar_veiculo/get_Status" => "selecionar_veiculo#get_Status"
+  match "selecionar_veiculo/set_Ocupado" => "selecionar_veiculo#set_Ocupado"
+  match "selecionar_veiculo/atualiza_Status" => "selecionar_veiculo#atualiza_Status"
   
   match "show_prontuario" => "show_prontuario#show", :via => :get, :as => 'show_prontuario'
   

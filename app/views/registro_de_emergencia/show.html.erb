@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+	<b>Paciente:</b>
+	<%= @paciente.nome %>
+<p>
+
+<p>
   <b>Data:</b>
   <%= @registro_de_emergencium.data %>
 </p>
@@ -21,5 +26,5 @@
 </p>
 
 
-<%= link_to 'Edit', edit_registro_de_emergencium_path(@registro_de_emergencium) %> |
-<%= link_to 'Back', registro_de_emergencia_path %>
+<%= link_to 'Editar', edit_paciente_registro_de_emergencium_path(@paciente, @registro_de_emergencium) %> |
+<%= link_to 'Voltar', paciente_registro_de_emergencia_path(@paciente) %>

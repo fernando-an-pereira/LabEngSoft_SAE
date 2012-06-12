@@ -1,7 +1,7 @@
-<%= form_for(@registro_de_emergencium) do |f| %>
+<%= form_for ([@paciente, @registro_de_emergencium]) do |f| %>
   <% if @registro_de_emergencium.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@registro_de_emergencium.errors.count, "error") %> prohibited this registro_de_emergencium from being saved:</h2>
+      <h2><%= pluralize(@registro_de_emergencium.errors.count, "error") %> Registro sem permissao de salvar:</h2>
 
       <ul>
       <% @registro_de_emergencium.errors.full_messages.each do |msg| %>
@@ -16,18 +16,17 @@
     <%= f.datetime_select :data %>
   </div>
   <div class="field">
-    <%= f.label :localidadeEmergencia %><br />
-    <%= f.text_area :localidadeEmergencia %>
+    <%= f.label :localidade %><br />
+    <%= f.text_field :localidadeEmergencia %>
   </div>
   <div class="field">
     <%= f.label :gravidade %><br />
-    <%= f.text_area :gravidade %>
+    <%= f.text_field :gravidade %>
   </div>
   <div class="field">
     <%= f.label :causas %><br />
     <%= f.text_area :causas %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Armazenar Registro" %>
   </div>
 <% end %>

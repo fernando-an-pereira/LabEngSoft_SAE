@@ -4,6 +4,6 @@ class Medico < Pessoa
   
   attr_accessible :CRM
   
-  has_many :registro_de_emergencia, :foreign_key => "medico_id"
+  has_many :registro_de_emergencia, :foreign_key => "medico_id", :dependent => :nullify
   
 end

@@ -1,4 +1,4 @@
-<%= form_for(@paciente) do |p| %>
+<%= form_for(@paciente) do |f| %>
   <% if @paciente.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@paciente.errors.count, "error") %> prohibited this paciente from being saved:</h2>
@@ -12,30 +12,30 @@
   <% end %>
 
   <div class="field">
-    <%= p.label :nome %><br />
-    <%= p.text_field :nome %>
+    <%= f.label :nome %><br />
+    <%= f.text_field :nome %>
   </div>
   <div class="field">
-    <%= p.label :CPF %><br />
-    <%= p.text_field :CPF %>
+    <%= f.label :CPF %><br />
+    <%= f.text_field :CPF %>
   </div>
   <div class="field">
-    <%= p.label :endereco %><br />
-    <%= p.text_field :endereco %>
+    <%= f.label :endereco %><br />
+    <%= f.text_field :endereco %>
   </div>
   <div class="field">
-    <%= p.label :email %><br />
-    <%= p.text_field :email %>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
   </div>
-  <div class="field">
-    <%= p.label :password %><br />
-    <%= p.text_field :password %>
+  <div>
+	<%= f.label :password %><br />
+    <%= f.text_field :password %>
   </div>
-  <div class="field">
-    <%= p.label :password_confirmation %><br />
-    <%= p.text_field :password_confirmation %>
+  <div>
+	<%= f.label :password_confirmation %><br />
+    <%= f.text_field :password_confirmation %>
   </div>
   <div class="actions">
-    <%= p.submit %>
+    <%= f.submit ("Armazenar Paciente") %>
   </div>
 <% end %>
