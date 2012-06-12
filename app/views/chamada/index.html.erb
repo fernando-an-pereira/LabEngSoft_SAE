@@ -10,7 +10,6 @@ $(document).ready(
   });
 </script>
 
-
 <script>
 $(function() {
   $(".button").click(function() {
@@ -35,9 +34,13 @@ $(function() {
 });
 </script>
 
+<% if atendente? || medico? -%>
+  <%= link_to "Encerra atendimento", encerrar_chamada_path %>
+<% end -%>
 
-
-
+<% if medico? -%>
+  | <%= link_to "Visualizar prontuário", :controller => "show_prontuario", :action => "show", :id => @paciente.id %>
+<% end -%>
 
 <h1> Mensagens </h1>
 
