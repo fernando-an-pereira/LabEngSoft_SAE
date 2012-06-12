@@ -22,7 +22,7 @@ class RegistrarEmergenciaController < ApplicationController
   # GET /paciente/1/registro_de_emergencia/new
   def new
 	@paciente = Paciente.find(params[:paciente_id])
-    @registro_de_emergencium = @paciente.prontuario.registro_de_emergencia
+    @registro_de_emergencium = RegistroDeEmergencium.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -37,11 +37,12 @@ class RegistrarEmergenciaController < ApplicationController
   
   # POST /paciente/1/registro_de_emergencia
   def create
-    @registro_de_emergencium = RegistroDeEmergencium.new(params[:registro_de_emergencium])
+	@paciente = Paciente.find(params[:paciente_id])
+    @paciente.prontuario.registro_de_emergencium << RegistroDeEmergencium.new(params[:registro_de_emergencium])
 
     respond_to do |format|
-      if @registro_de_emergencium.save
-        format.html { redirect_to @registro_de_emergencium, notice: 'Registro de emergencia criado com sucesso.' }
+      if @paciente.save
+        format.html { redirect_to [@paciente, @registro_de_emergencium], notice: 'Registro de emergencia criado com sucesso.' }
       else
         format.html { render action: "new" }
       end
