@@ -57,7 +57,11 @@ class RegistroDeEmergenciaController < ApplicationController
 
     respond_to do |format|
       if @registro_de_emergencium.update_attributes(params[:registro_de_emergencium])
-        format.html { redirect_to chamada_path(current_pessoa), notice: 'Registro de emergencia atualizado com sucesso.' }
+        if current_pessoa.type == "Medico"
+			format.html { redirect_to chamada_path(current_pessoa), notice: 'Registro de emergencia atualizado com sucesso.' }
+		else 
+			format.html { redirect_to paciente_registro_de_emergencium_path(@paciente, @registro_de_emergencium), notice: 'Registro de emergencia atualizado com sucesso.' }
+		end;
       else
         format.html { render action: "edit" }
       end
