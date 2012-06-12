@@ -26,6 +26,7 @@
   var iterator = 0;
   var map;
   var markersArray = [];
+  var ren;
 
   function initialize() {
     var mapOptions = {
@@ -56,7 +57,7 @@
 	 clearOverlays();
 	 drop();
 	  
-	},10000);
+	},3000);
   }
   
   function clearOverlays() {
@@ -81,7 +82,11 @@
   
   var resultado;
   
-  $(function() {  
+  $(function() {
+  
+	  $( "#dialog" ).dialog({
+	    autoOpen: false
+	   });
 	  
 	  $( "#dialog-confirm" ).dialog({
 		resizable: false,
@@ -91,12 +96,25 @@
 		buttons: {
 			"Sim": function() {
 				$(this).dialog("close");
-				atualizaMarkers();
-			},
+				$.ajax({
+				  url: "selecionar_veiculo/set_Ocupado",
+				  type: "POST",
+				  data: {ren: ren},
+				  dataType: "json",
+				  success: function(e) {
+					if (e == false)
+						$("#dialog").dialog();
+					else {
+						resultado = e;
+						atualizaMarkers();
+					}
+				  }
+				})
+			  },
 			"Cancelar": function() {
 				$(this).dialog("close");
 			}
-		}
+		  }
 		});
 		
 		initialize();
@@ -120,7 +138,7 @@
 
         google.maps.event.addListener(marker, 'click', function() {
 			
-			var ren = marker.title.slice(9);
+			ren = marker.title.slice(9);
 			
 			$.ajax({
 				url: "selecionar_veiculo/get_Status",
@@ -128,11 +146,9 @@
 				data: {ren: ren},
 				dataType: "json",
 				success: function(e) {
-					console.log(e);
-					if(e == false)
-						$("#dialog").dialog();
+					if(e == true)
+						$("#dialog").dialog("open");
 					else {
-						resultado = e;
 						$("#dialog-confirm").dialog("open");
 					}
 				}
@@ -152,7 +168,7 @@
 <div id="map_canvas" style="width: 500px; height: 400px;">map div</div>
 
 <div id="dialog" title="Atenção!">
-	<p>Veículo ocupado! Escolha outro veículo.</p>
+	<p><span class="ui-dialog"></span>Veículo ocupado! Escolha outro veículo.</p>
 </div>
 
 <div id="dialog-confirm" title="Redirecionar veículo">
