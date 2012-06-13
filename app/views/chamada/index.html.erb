@@ -8,16 +8,21 @@ $(document).ready(
 		});	
     }, 3000);
   });
-</script>
-
-<script>
+  
+$(document).ready(function() {
+	$("textarea#conteudo").focus();
+	$("textarea#conteudo").select();
+});
+  
 $(function() {
   $(".button").click(function() {
-    var conteudo = $("input#conteudo").val();
+    var conteudo = $("textarea#conteudo").val();
     if(conteudo == "") {
       return false;
     }
     $('<b>Eu:</b> ' + conteudo + '<br>').appendTo("#mensagens");
+    $("textarea#conteudo").val('');
+    $(".button").hide();
     
     $.ajax({
       type: "POST",
@@ -32,25 +37,48 @@ $(function() {
     
   });
 });
+
+$(function() {
+	$("textarea#conteudo").keyup(function() {
+			var conteudo = $("textarea#conteudo").val();
+			if(conteudo == "") {
+				$(".button").hide();
+			}
+			else {
+				$(".button").show();
+			}
+	});
+});
+
 </script>
 
 <% if atendente? || medico? -%>
-  <%= link_to "Encerra atendimento", encerrar_chamada_path %>
+  <%= link_to "Encerra chamada", encerrar_chamada_path(current_pessoa), :confirm => "Deseja realmente encerrar a chamada?" %>
 <% end -%>
 
 <% if medico? -%>
-  | <%= link_to "Visualizar prontuário", :controller => "show_prontuario", :action => "show", :id => @paciente.id %>
+  | <%= link_to "Visualizar prontuário", { :controller => "show_prontuario", :action => "show", :id => @paciente.id }, :target => "_blank" %>
+<% elsif atendente? -%>
+  | <%= link_to "Redirecionar paciente para consulta virtual", redirecionar_chamada_path(current_pessoa) %>
+  | <%= link_to "Enviar veículo de emergência", chamada_path(current_pessoa), :target => "_blank" %>
 <% end -%>
 
 <h1> Mensagens </h1>
 
-<div id="mensagens">
+<div style="width:600px;
+ height:300px;
+ background-color:#C2C2C2;
+ overflow:auto;">
+  <div id="mensagens">
+  </div>
 </div>
+
 
 <div id="enviar_mensagem">
   <form name="texto" action="">
-      <input type="text" size="90" name="conteudo" id="conteudo" value="" />
-      <input type="submit" class="button" id="botao_enviar" value="Enviar" />
+    <!-- <input type="text" size="90" name="conteudo" id="conteudo" value="" /> -->
+    <textarea rows="5" cols="70" style="width: 600px;" name="conteudo" id="conteudo">Digite sua mensagem aqui</textarea>
+    <input type="submit" class="button" id="botao_enviar" value="Enviar" />
   </form>
 </div>
 

@@ -24,7 +24,7 @@ class ChamadaController < ApplicationController
   @solicita = false
   
   def index
-    if medico?
+    if (medico? || atendente?)
       respond_to do |format|
         @paciente = @@pacienteFuncionario.key(current_pessoa)
         format.html
@@ -134,24 +134,28 @@ class ChamadaController < ApplicationController
   end
   
   def encerrarChamada
-    respond_to do |format|
-      if (medico?)
-        medicoLivre(current_pessoa)
-        format.html { redirect_to root_path(current_pessoa) }
-      elsif (atendente?)
-        if(@solicita)
-          @@pacienteFuncionario.key(current_pessoa).solicita = true
-          solicitaConsulta(@@pacienteFuncionario.key(current_pessoa))
-          @solicita = false
-        end
-        atendenteLivre(current_pessoa)
-        format.html { redirect_to root_path(current_pessoa) }
+    if (atendente?)
+      if(@solicita)
+        @@pacienteFuncionario.key(current_pessoa).solicita = true
+        solicitaConsulta(@@pacienteFuncionario.key(current_pessoa))
+        @solicita = false
       end
     end
+    redirect_to inicia_chamada_path
   end
   
   def redirecionaPacienteConsultaVirtual
     @solicita = true
+  end
+  
+  def teste
+    respond_to do |format|
+      if paciente?
+        format.json { render :json => { :atendente => @@pacienteFuncionario[current_pessoa].email } }
+      else
+        format.json { render :json => { :paciente => @@pacienteFuncionario.key(current_pessoa).email } }
+      end
+    end
   end
   
   protected
@@ -180,6 +184,9 @@ class ChamadaController < ApplicationController
       @@atendentesLivres << atendente
     else
       paciente = @@pacientesEsperaAtendimento.shift
+      while (paciente.nil?)
+        @@pacientesEsperaAtendimento.shift
+      end
       @@pacienteFuncionario.merge!({ paciente => atendente })
     end
   end
@@ -190,6 +197,9 @@ class ChamadaController < ApplicationController
       @@medicosLivres << medico
     else
       paciente = @@pacientesEsperaConsulta.shift
+#      while (! paciente.logged_in?)
+#        paciente = @@pacientesEsperaConsulta.shift
+#      end
       @@pacienteFuncionario.merge!({ paciente => medico })
     end
   end
