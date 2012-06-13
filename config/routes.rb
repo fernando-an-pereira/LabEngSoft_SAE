@@ -9,7 +9,7 @@ SAE::Application.routes.draw do
   match "answer_paciente" => "registro_de_emergencia#answer", :as => 'answer_paciente'
   
   authenticated :pessoa do
-    root :to => 'registro_de_emergencia#answer'
+    root :to => 'chamada#index'
   end
   
   match "chamada/enviarMensagem" => "chamada#enviarMensagem", :via => :post
