@@ -1,3 +1,5 @@
+include TypesHelper
+
 class RegistroDeEmergenciaController < ApplicationController
   # GET /paciente/1/registro_de_emergencia
   def index
@@ -39,6 +41,15 @@ class RegistroDeEmergenciaController < ApplicationController
   def create
 	@paciente = Paciente.find(params[:paciente_id])
 	@registro_de_emergencium = RegistroDeEmergencium.new(params[:registro_de_emergencium])
+	
+	if atendente?
+		@registro_de_emergencium.atendente_id = current_pessoa.id
+		puts("\n\n\natendente\n\n\n\n")
+	elsif medico?
+		@registro_de_emergencium.medico_id = current_pessoa.id
+		puts("\n\n\n\nMedico\n\n\n\n\n")
+	end
+	
     @paciente.prontuario.registro_de_emergencium << @registro_de_emergencium
 
     respond_to do |format|
@@ -58,8 +69,10 @@ class RegistroDeEmergenciaController < ApplicationController
     respond_to do |format|
       if @registro_de_emergencium.update_attributes(params[:registro_de_emergencium])
         if current_pessoa.type == "Medico"
+			@registro_de_emergencium.medico_id = current_pessoa.id
+			@registro_de_emergencium.save
 			format.html { redirect_to chamada_path(current_pessoa), notice: 'Registro de emergencia atualizado com sucesso.' }
-		else 
+		else
 			format.html { redirect_to paciente_registro_de_emergencium_path(@paciente, @registro_de_emergencium), notice: 'Registro de emergencia atualizado com sucesso.' }
 		end;
       else

@@ -8,6 +8,7 @@ class CreateRegistroDeEmergencia < ActiveRecord::Migration
       t.references :prontuario
       t.references :atendente
       t.references :medico
+      t.references :veiculo_de_saude
 
       t.timestamps
     end

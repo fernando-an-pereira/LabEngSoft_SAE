@@ -19,7 +19,7 @@ namespace :db do
     paciente.prontuario.exame << Exame.new(:data => '06/07/2012', :nomeDoLaboratorio => 'Tio João', :resultado => 'Teníase', :tipo => 'exame de fezes')
     paciente.prontuario.registro_de_emergencium << RegistroDeEmergencium.new(:data => '17/06/2012', :causas => 'Overdose de paracetamol.', :gravidade => 'Leve', :localidadeEmergencia => 'Laboratorio Tio Joao')
 	paciente.save
-    paciente = Paciente.new(:email => 'joao.silva@tatu.net', :password => 'joaosilva', :password_confirmation => 'joaosilva', :nome => "Joao da Silva", :CPF => '234.567.890.1', :endereco => "Rua das Palmeiras, 4")
+	paciente = Paciente.new(:email => 'joao.silva@tatu.net', :password => 'joaosilva', :password_confirmation => 'joaosilva', :nome => "Joao da Silva", :CPF => '234.567.890.1', :endereco => "Rua das Palmeiras, 4")
     paciente.prontuario = Prontuario.new(:data => '07/06/2012', :observacao => 'Joao da Silva')
     paciente.save
     paciente = Paciente.new(:email => 'joao.pereira@tatu.net', :password => 'joaopereira', :password_confirmation => 'joaopereira', :nome => "Joao Pereira", :CPF => '345.678.901.2', :endereco => "Alameda dos Tatus, 17")
@@ -46,7 +46,9 @@ namespace :db do
 
     medico = Medico.new(:email => 'medico@tatu.gov.br', :password => 'medico', :password_confirmation => 'medico', :nome => "Medico de Souza", :CPF => '111.111.111-9', :endereco => "Casa da Vó, 4321", :CRM => '100.000.000-1')
     medico.save
-
+	medico = Medico.new(:email => 'medico0@tatu.gov.br', :password => 'medico0', :password_confirmation => 'medico0', :nome => "Medico Menezes", :CPF => '222.222.222-7', :endereco => "Avenida da Lebre, 8", :CRM => '200.000.000.2')
+    medico.save
+    
     atendente = Atendente.new(:email => 'atendente@tatu.gov.br', :password => 'atendente', :password_confirmation => 'atendente', :nome => "Atendente de Souza", :CPF => '999.999.999-1', :endereco => "Casa da Mãe, 123", :CRE => '100.000.000-1')
     atendente.save
     atendente = Atendente.new(:email => 'atendente2@tatu.gov.br', :password => 'atendente2', :password_confirmation => 'atendente2', :nome => "Atendente da Silva", :CPF => '999.999.000-1', :endereco => "Casa da Mãe, 321", :CRE => '100.000.001-1')
