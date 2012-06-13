@@ -98,8 +98,8 @@ class ChamadaController < ApplicationController
   
   def inicia
     if(paciente?)
-      solicitaConsulta(current_pessoa)
-      redirect_to esperaConsulta_path(current_pessoa)
+      solicitaAtendimento(current_pessoa)
+      redirect_to esperaAtendimento_path(current_pessoa)
     elsif(atendente?)
       atendenteLivre(current_pessoa)
       redirect_to esperaPaciente_path(current_pessoa)
