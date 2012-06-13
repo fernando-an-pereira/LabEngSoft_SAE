@@ -5,6 +5,7 @@ $(document).ready(
       $.getJSON('<%= "#{chamada_mensagem_url}.json"  %>', 
         function(data) {
 		  $('<b>' + data.remetente + ':</b> ' + data.conteudo + '<br>').appendTo("#mensagens");
+		  $("#mensagens_scroll").scrollTop($("#mensagens_scroll")[0].scrollHeight);
 		});	
     }, 3000);
   });
@@ -23,6 +24,7 @@ $(function() {
     $('<b>Eu:</b> ' + conteudo + '<br>').appendTo("#mensagens");
     $("textarea#conteudo").val('');
     $(".button").hide();
+    $("#mensagens_scroll").scrollTop($("#mensagens_scroll")[0].scrollHeight);
     
     $.ajax({
       type: "POST",
@@ -65,7 +67,7 @@ $(function() {
 
 <h1> Mensagens </h1>
 
-<div style="width:600px;
+<div id="mensagens_scroll" style="width:600px;
  height:300px;
  background-color:#C2C2C2;
  overflow:auto;">
