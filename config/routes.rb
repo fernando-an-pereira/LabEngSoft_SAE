@@ -20,7 +20,7 @@ SAE::Application.routes.draw do
   match "chamada/esperaPaciente/:id" => "chamada#esperaPaciente", :as => 'esperaPaciente'
   match "chamada/encerrar/:id" => "chamada#encerrarChamada", :as => 'encerrar_chamada'
   match "chamada/redirecionar/:id" => "chamada#redirecionaPacienteConsultaVirtual", :as => 'redirecionar_chamada'
-#  match "chamada/teste/:id" => "chamada#teste", :as => 'teste'
+  match "chamada/teste/:id" => "chamada#teste", :as => 'teste'
   
   match "pesquisa" => "pesquisa#index", :via => :get
   match "pesquisa/pacientes" => "pesquisa#search", :via => :get, :as => 'pesquisa_search'

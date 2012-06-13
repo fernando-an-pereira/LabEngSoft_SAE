@@ -4,8 +4,13 @@ $(document).ready(
     setInterval(function(){
       $.getJSON('<%= "#{chamada_mensagem_url}.json"  %>', 
         function(data) {
-		  $('<b>' + data.remetente + ':</b> ' + data.conteudo + '<br>').appendTo("#mensagens");
-		  $("#mensagens_scroll").scrollTop($("#mensagens_scroll")[0].scrollHeight);
+	      if(data.redirect) {
+            window.location.href = data.redirect;
+          }
+          else {
+		    $('<b>' + data.remetente + ':</b> ' + data.conteudo + '<br>').appendTo("#mensagens");
+		    $("#mensagens_scroll").scrollTop($("#mensagens_scroll")[0].scrollHeight);
+		  }
 		});	
     }, 1000);
   });
@@ -16,14 +21,14 @@ $(document).ready(function() {
 });
   
 $(function() {
-  $(".button").click(function() {
+  $("input#botao_enviar").click(function() {
     var conteudo = $("textarea#conteudo").val();
     if(conteudo == "") {
       return false;
     }
     $('<b>Eu:</b> ' + conteudo + '<br><br>').appendTo("#mensagens");
     $("textarea#conteudo").val('');
-    $(".button").hide();
+    $("input#botao_enviar").hide();
     $("#mensagens_scroll").scrollTop($("#mensagens_scroll")[0].scrollHeight);
     
     $.ajax({
@@ -44,25 +49,47 @@ $(function() {
 	$("textarea#conteudo").keyup(function() {
 			var conteudo = $("textarea#conteudo").val();
 			if(conteudo == "") {
-				$(".button").hide();
+				$("input#botao_enviar").hide();
 			}
 			else {
-				$(".button").show();
+				$("input#botao_enviar").show();
 			}
 	});
 });
 
 </script>
 
+<% if atendente? -%>
+<script>
+$(function() {
+  $("input#botao_redirecionar").click(function() {
+	
+	$("input#botao_redirecionar").attr("disabled", "disabled");
+	
+    $.ajax({
+      type: "GET",
+      url: "<%= redirecionar_chamada_url %>",
+      success: function() {
+        alert("Paciente encaminhado para a consulta virtual!");
+      }
+    });
+    
+    return false
+    
+  });
+});
+</script>
+<% end -%>
+
 <% if atendente? || medico? -%>
-  <%= link_to "Encerra chamada", encerrar_chamada_path(current_pessoa), :confirm => "Deseja realmente encerrar a chamada?" %>
+  <%= button_to "Encerra chamada", encerrar_chamada_path(current_pessoa), :confirm => "Deseja realmente encerrar a chamada?" %>
 <% end -%>
 
 <% if medico? -%>
-  | <%= link_to "Visualizar prontuário", { :controller => "show_prontuario", :action => "show", :id => @paciente.id }, :target => "_blank" %>
+   
 <% elsif atendente? -%>
-  | <%= link_to "Redirecionar paciente para consulta virtual", redirecionar_chamada_path(current_pessoa) %>
-  | <%= link_to "Enviar veículo de emergência", chamada_path(current_pessoa), :target => "_blank" %>
+   <input type="submit" class="button" id="botao_redirecionar" value="Redirecionar paciente para consulta virtual" />
+   <%= button_to "Enviar veículo de emergência", chamada_path(current_pessoa), :target => "_blank" %>
 <% end -%>
 
 <h1> Mensagens </h1>

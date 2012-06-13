@@ -21,7 +21,8 @@ class ChamadaController < ApplicationController
   # Hash que mapeia { paciente => atendente/medico com quem está se comunicando }
   @@pacienteFuncionario = Hash.new
   
-  @solicita = false
+  #
+  @@solicita = Array.new
   
   def index
     if (medico? || atendente?)
@@ -36,20 +37,20 @@ class ChamadaController < ApplicationController
     if(@@mensagens[current_pessoa].nil?)
       @@mensagens[current_pessoa] = Array.new
     end
-    conteudo = ""
-    remetente = @@mensagens[current_pessoa][0].remetente
-    @@mensagens[current_pessoa].each do |mensagem|
-      conteudo += "#{mensagem.conteudo} <br>"
-    end
-    @@mensagens[current_pessoa].clear  
-    @mensagem = Mensagem.new
-    @mensagem.conteudo = conteudo
-    @mensagem.remetente = remetente
     respond_to do |format|
-      if(paciente? && @solicita) 
-        @solicita = false
-        format.html { redirect_to esperaConsulta_path(current_pessoa) }
+      if(paciente? && @@solicita.include?(current_pessoa)) 
+        @@solicita.delete(current_pessoa)
+        format.json { render :json => { :redirect => esperaConsulta_path(current_pessoa) } }
       else
+        conteudo = ""
+        remetente = @@mensagens[current_pessoa][0].remetente
+        @@mensagens[current_pessoa].each do |mensagem|
+          conteudo += "#{mensagem.conteudo} <br>"
+        end
+        @@mensagens[current_pessoa].clear  
+        @mensagem = Mensagem.new
+        @mensagem.conteudo = conteudo
+        @mensagem.remetente = remetente
 #        format.html # mensagem.html.erb
         format.json { render :json => @mensagem }
       end
@@ -68,8 +69,7 @@ class ChamadaController < ApplicationController
         appendMensagem(mensagem) 
       end
       format.js
-    end
-    
+    end  
   end
   
   def esperaAtendimento
@@ -77,8 +77,10 @@ class ChamadaController < ApplicationController
       @espera = @@pacientesEsperaAtendimento.index(current_pessoa)
       format.html
       if(@espera.nil?)
+        format.html { redirect_to chamada_path(current_pessoa) }
         format.json { render :json => { :redirect => chamada_path(current_pessoa) } }
       else
+        format.html
         format.json { render :json => { :espera => @espera + 1 } }
       end
     end
@@ -89,8 +91,10 @@ class ChamadaController < ApplicationController
       @espera = @@pacientesEsperaConsulta.index(current_pessoa)
       format.html
       if(@espera.nil?)
+        format.html { redirect_to chamada_path(current_pessoa) }
         format.json { render :json => { :redirect => chamada_path(current_pessoa) } }
       else
+        format.html
         format.json { render :json => { :espera => @espera + 1 } }
       end
     end
@@ -113,11 +117,12 @@ class ChamadaController < ApplicationController
     if (medico?)
       respond_to do |format|
         @espera = @@medicosLivres.index(current_pessoa)
-        format.html
         if(@espera.nil?)
+          format.html { redirect_to chamada_path(current_pessoa) }
           format.json { render :json => { :redirect => chamada_path(current_pessoa) } }
         else
           format.json { render :json => { :espera => @espera + 1 } }
+          format.html
         end
       end
     elsif (atendente?)
@@ -125,8 +130,10 @@ class ChamadaController < ApplicationController
         @espera = @@atendentesLivres.index(current_pessoa)
         format.html
         if(@espera.nil?)
+          format.html { redirect_to chamada_path(current_pessoa) }
           format.json { render :json => { :redirect => chamada_path(current_pessoa) } }
         else
+          format.html
           format.json { render :json => { :espera => @espera + 1 } }
         end
       end
@@ -134,26 +141,30 @@ class ChamadaController < ApplicationController
   end
   
   def encerrarChamada
-    if (atendente?)
-      if(@solicita)
-        @@pacienteFuncionario.key(current_pessoa).solicita = true
-        solicitaConsulta(@@pacienteFuncionario.key(current_pessoa))
-        @solicita = false
-      end
+    if (atendente? && @@solicita.include?(current_pessoa))
+      @@solicita << @@pacienteFuncionario.key(current_pessoa)
+      solicitaConsulta(@@pacienteFuncionario.key(current_pessoa))
+      @@solicita.delete(current_pessoa)
     end
     redirect_to inicia_chamada_path
   end
   
   def redirecionaPacienteConsultaVirtual
-    @solicita = true
+    respond_to do |format|
+      @@solicita << current_pessoa
+      format.js
+    end
   end
   
   def teste
     respond_to do |format|
+      @solicita = @@solicita.include?(current_pessoa)
       if paciente?
-        format.json { render :json => { :atendente => @@pacienteFuncionario[current_pessoa].email } }
+        format.json { render :json => { :solicita => @solicita } }
+        #format.json { render :json => { :atendente => @@pacienteFuncionario[current_pessoa].email, :solicita => @solicita } }
       else
-        format.json { render :json => { :paciente => @@pacienteFuncionario.key(current_pessoa).email } }
+        format.json { render :json => { :solicita => @solicita } }
+        #format.json { render :json => { :paciente => @@pacienteFuncionario.key(current_pessoa).email, :solicita => @solicita } }
       end
     end
   end
