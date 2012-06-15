@@ -30,7 +30,7 @@ SAE::Application.routes.draw do
   match "selecionar_veiculo/set_Ocupado" => "selecionar_veiculo#set_Ocupado"
   match "selecionar_veiculo/atualiza_Status" => "selecionar_veiculo#atualiza_Status"
   
-  match "show_prontuario" => "show_prontuario#show", :via => :get, :as => 'show_prontuario'
+  match "show_prontuario" => "show_prontuario#show", :via => [:get, :post], :as => 'show_prontuario'
   
   get "home/index"
 

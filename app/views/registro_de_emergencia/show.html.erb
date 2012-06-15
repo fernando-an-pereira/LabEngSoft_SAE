@@ -26,5 +26,9 @@
 </p>
 
 
-<%= link_to 'Editar', edit_paciente_registro_de_emergencium_path(@paciente, @registro_de_emergencium) %> |
-<%= link_to 'Voltar', paciente_registro_de_emergencia_path(@paciente) %>
+<%= link_to 'Editar', edit_paciente_registro_de_emergencium_path(@paciente, @registro_de_emergencium) %>
+
+<% if @registro_de_emergencium.redireciona_veiculo == true %>
+	</br></br>
+	<%= button_to "Selecionar veiculo", selecionar_veiculo_path %>
+<% end %>

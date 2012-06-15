@@ -27,6 +27,14 @@
     <%= f.label :causas %><br />
     <%= f.text_area :causas %>
   </div>
+  <div class="check_box">
+	<%= f.label :redirecionar_para_consulta_virtual %>
+	<%= f.check_box :consulta_virtual %>
+  </div>
+  <div class="check_box">
+	<%= f.label :redirecionar_veiculo_de_emergencia %>
+	<%= f.check_box :redireciona_veiculo %>
+  </div>
     <%= f.submit "Armazenar Registro" %>
   </div>
 <% end %>

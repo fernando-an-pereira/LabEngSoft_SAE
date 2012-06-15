@@ -82,14 +82,15 @@ $(function() {
 <% end -%>
 
 <% if atendente? || medico? -%>
-  <%= button_to "Encerra chamada", encerrar_chamada_path(current_pessoa), :confirm => "Deseja realmente encerrar a chamada?" %>
+  <%= button_to "Encerrar chamada", encerrar_chamada_path(current_pessoa), :confirm => "Deseja realmente encerrar a chamada?" %>
 <% end -%>
 
 <% if medico? -%>
-   
+   <%= link_to "Visualizar prontuário", show_prontuario_path(:paciente_id => @paciente.id), :target => "_blank" %>
 <% elsif atendente? -%>
    <input type="submit" class="button" id="botao_redirecionar" value="Redirecionar paciente para consulta virtual" />
-   <%= button_to "Enviar veículo de emergência", chamada_path(current_pessoa), :target => "_blank" %>
+   <%= link_to "Enviar veículo de emergência", selecionar_veiculo_path, :target => "_blank" %>
+   <%= link_to "Pesquisar Paciente", pesquisa_path, :target => '_blank' %> 
 <% end -%>
 
 <h1> Mensagens </h1>
@@ -105,7 +106,6 @@ $(function() {
 
 <div id="enviar_mensagem">
   <form name="texto" action="">
-    <!-- <input type="text" size="90" name="conteudo" id="conteudo" value="" /> -->
     <textarea rows="5" cols="70" style="width: 600px;" name="conteudo" id="conteudo">Digite sua mensagem aqui</textarea>
     <input type="submit" class="button" id="botao_enviar" value="Enviar" />
   </form>

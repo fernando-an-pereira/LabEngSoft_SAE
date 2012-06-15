@@ -69,9 +69,12 @@ ActiveRecord::Schema.define(:version => 20120605015531) do
     t.text     "localidadeEmergencia"
     t.text     "gravidade"
     t.text     "causas"
+    t.boolean  "consulta_virtual"
+    t.boolean  "redireciona_veiculo"
     t.integer  "prontuario_id"
     t.integer  "atendente_id"
     t.integer  "medico_id"
+    t.integer  "veiculo_de_saude_id"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
   end

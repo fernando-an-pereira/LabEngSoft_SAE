@@ -44,10 +44,8 @@ class RegistroDeEmergenciaController < ApplicationController
 	
 	if atendente?
 		@registro_de_emergencium.atendente_id = current_pessoa.id
-		puts("\n\n\natendente\n\n\n\n")
 	elsif medico?
 		@registro_de_emergencium.medico_id = current_pessoa.id
-		puts("\n\n\n\nMedico\n\n\n\n\n")
 	end
 	
     @paciente.prontuario.registro_de_emergencium << @registro_de_emergencium

@@ -1,5 +1,5 @@
 class RegistroDeEmergencium < ActiveRecord::Base
-  attr_accessible :causas, :data, :gravidade, :localidadeEmergencia
+  attr_accessible :causas, :data, :gravidade, :localidadeEmergencia, :consulta_virtual, :redireciona_veiculo
   
   validates :localidadeEmergencia,	:presence => true
   
